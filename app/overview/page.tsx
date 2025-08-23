@@ -1,10 +1,8 @@
 "use client";
 import React, { useState, useMemo } from "react";
 import { Search, MoreVertical } from "lucide-react";
-import Image from "next/image";
-import cert2 from "../../public/images/cert/cert2.png";
-import CertificationData from "@/components/Website/Certifications/CertificationData";
 import CourseItem from "@/components/dashboard/Course/CourseItem";
+import CertificationData from "@/components/data/CertificationData";
 
 const tabs = ["All courses", "My Learning", "Certifications"];
 

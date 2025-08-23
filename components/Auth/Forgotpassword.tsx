@@ -1,9 +1,8 @@
 "use client";
-import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import BgImage from "@/public/images/bg.jpg";
+
 
 const ForgotPassword = () => {
   const [data, setData] = useState({
@@ -36,7 +35,7 @@ const ForgotPassword = () => {
 
           <p className="mt-4 text-center text-sm">
             Already have an account?{" "}
-            <Link href="/auth/signin" className="text-pink-500">
+            <Link href="/signin" className="text-pink-500">
               Sign in
             </Link>
           </p>

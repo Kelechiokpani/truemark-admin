@@ -51,12 +51,12 @@ const Signin = () => {
             <p className="mt-4 text-start text-sm">
               Do not have an account?{" "}
               <br/>
-              <Link href="/auth/signup" className="text-pink-500">
+              <Link href="/signup" className="text-pink-500">
                 Sign up
               </Link>
             </p>
             <p className="mt-4 text-center text-sm">
-              <Link href="/auth/forgotpassword" className="text-pink-500">
+              <Link href="/forgotpassword" className="text-pink-500">
                 Forgot password?
               </Link>
             </p>

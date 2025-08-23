@@ -2,7 +2,7 @@
 
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  // swcMinify: true,
   images: {
     domains: ["localhost"],
     remotePatterns: [
@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "cdn.sanity.io",
         port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "truemarkglobalss.com",
       },
     ],
   },

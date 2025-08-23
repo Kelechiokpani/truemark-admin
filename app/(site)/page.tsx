@@ -1,12 +1,5 @@
 import { Metadata } from "next";
-import HeroSlider from "@/components/Website/Home/Hero/HeroSlider";
-import Hero from "@/components/Website/Home";
-import Brands from "@/components/Website/Home/Brands";
-import Feature from "@/components/Website/Home/Features";
-import FeaturesTab from "@/components/Website/Home/FeaturesTab";
-import CTA from "@/components/Website/Home/CTA";
-import FAQ from "@/components/Website/Home/FAQ";
-import Contact from "@/components/Website/Home/Contact";
+import Signup from "@/components/Auth/Signup";
 
 
 export const metadata: Metadata = {
@@ -17,22 +10,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main>
-      <HeroSlider />
-      <Hero />
-      <Brands />
-      <Feature />
-      <FeaturesTab />
-      <CTA />
-      <FAQ />
-      <Contact />
-
-
-      {/*<About />*/}
-      {/*<FunFact />*/}
-      {/*<Integration />*/}
-      {/*<Testimonial />*/}
-      {/*<Pricing />*/}
-      {/*<Certifications />*/}
+      <Signup />
     </main>
   );
 }

@@ -1,9 +1,4 @@
 "use client";
-
-import Footer from "components/Layout/Footer";
-import Header from "components/Layout/Header";
-import Lines from "components/Website/Lines";
-import ScrollToTop from "components/Website/ScrollToTop";
 import { Inter } from "next/font/google";
 import "../globals.css";
 const inter = Inter({ subsets: ["latin"] });
@@ -19,7 +14,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={` ${inter.className}`} suppressHydrationWarning>
-      {/*<body className={`dark:bg-black ${inter.className}`} suppressHydrationWarning>*/}
       <NextTopLoader
         color="#387467"
         initialPosition={0.08}
@@ -38,12 +32,9 @@ export default function RootLayout({
         {/*  defaultTheme="light"*/}
         {/*>*/}
 
-          <Lines />
-          <Header />
           <ToasterContext />
           {children}
-          <Footer />
-          <ScrollToTop />
+
         {/*</ThemeProvider>*/}
       </body>
     </html>
