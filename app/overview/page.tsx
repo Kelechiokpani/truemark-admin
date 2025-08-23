@@ -4,8 +4,9 @@ import { Search, MoreVertical } from "lucide-react";
 import CourseItem from "@/components/dashboard/Course/CourseItem";
 import CertificationData from "@/components/data/CertificationData";
 
-const tabs = ["All courses", "My Learning", "Certifications"];
 
+
+const tabs = ["All courses", "My Learning", "Certifications"];
 const categories = [
   "All",
   "Quality, Health & Environment Mgt",
@@ -82,7 +83,6 @@ export default function MyLearningPage() {
                 <option key={f}>{f}</option>
               ))}
             </select>
-
             <button
               onClick={() => {
                 setActiveCategory("All");
@@ -119,35 +119,6 @@ export default function MyLearningPage() {
             filteredCourses.map((post, key) => (
               <CourseItem key={key} courseListing={post} />
             ))
-            // filteredCourses.map((course, i) => (
-            //   <div
-            //     key={course._id || i}
-            //     className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition"
-            //   >
-            //     <div className="relative">
-            //       <Image
-            //         src={
-            //           activeTab === "Certifications"
-            //             ? cert2 // use random static image for Certifications
-            //             : course.mainImage
-            //         }
-            //         alt={course.title}
-            //         className="w-full h-40 object-cover"
-            //         width={400}
-            //         height={160}
-            //       />
-            //       <button className="absolute top-2 right-2 bg-white p-1 rounded-full shadow">
-            //         <MoreVertical size={18} />
-            //       </button>
-            //     </div>
-            //     <div className="p-4">
-            //       <h3 className="font-semibold line-clamp-2">{course.title}</h3>
-            //       {course.metadata && (
-            //         <p className="text-sm text-gray-600">{course.metadata}</p>
-            //       )}
-            //     </div>
-            //   </div>
-            // ))
           )}
         </div>
       </main>
