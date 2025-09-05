@@ -1,6 +1,15 @@
 "use client"
 import Link from "next/link";
 import { useCourseStore } from "@/store/useCourseStore";
+import EmptyContainer from "@/components/utility/EmptyContainer";
+
+
+const empty_details = {
+  title: "Your cart is empty",
+  description: "Looks like you haven’t added any courses yet.",
+  callToAction: "Browse Courses",
+  to:"/overview/course"
+}
 
 
 export default function Cart() {
@@ -26,7 +35,7 @@ export default function Cart() {
       console.log("Payment successful:", reference);
 
       // ✅ Mark courses as paid
-      const courseIds = cart.map((c) => c._id);
+      const courseIds = cart.map((c) => c.id);
       markAsPaid(courseIds);
 
       // ✅ Clear the cart
@@ -43,26 +52,12 @@ export default function Cart() {
       <div className="min-h-screen bg-white p-4 md:p-10 rounded-lg ">
         {/*<div className="shadow-[0_4px_6px_rgba(0,0,0,0.1),0_-4px_6px_rgba(0,0,0,0.1),4px_0_6px_rgba(0,0,0,0.1),-4px_0_6px_rgba(0,0,0,0.1)] rounded-xl bg-white min-h-screen bg-white p-4 md:p-10  ">*/}
         {cart.length === 0 ? (
-          // ----------------- EMPTY CART -----------------
-          <div className="flex flex-col items-center justify-center py-20 text-center">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png"
-              alt="Empty cart"
-              className="w-40 h-40 mb-6 opacity-80"
+            <EmptyContainer
+              title={empty_details.title}
+              description={empty_details.description}
+              callToAction={empty_details.callToAction}
+              to={empty_details.to}
             />
-            <h2 className="text-xl font-semibold mb-2">
-              Your cart is empty
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Looks like you haven’t added any courses yet.
-            </p>
-            <Link href="/overview/course">
-              <button className="bg-[#387467] text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">
-                Browse Courses
-              </button>
-            </Link>
-
-          </div>
         ) : (
           // ----------------- CART ITEMS -----------------
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8  ">
@@ -72,19 +67,19 @@ export default function Cart() {
 
               {cart.map((course) => (
                 <div
-                  key={course._id}
+                  key={course.id}
                   className="flex flex-col md:flex-row gap-4 border-b pb-4 "
                 >
                   <img
-                    src={course.mainImage}
-                    alt={course.title}
+                    src={course.image}
+                    alt={course.name}
                     className="w-full md:w-40 h-28 object-cover rounded"
                   />
                   <div className="flex-1 space-y-1">
-                    <h3 className="font-semibold">{course.title}</h3>
+                    <h3 className="font-semibold">{course.name}</h3>
                     <div className="flex gap-4 text-sm text-[#387467] mt-8">
                       <button
-                        onClick={() => removeFromCart(course._id)}
+                        onClick={() => removeFromCart(course.id)}
                         className="hover:underline"
                       >
                         Remove

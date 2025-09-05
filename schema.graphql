@@ -1,0 +1,161 @@
+# This file was generated. Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+"Indicates exactly one field must be supplied and this field must not be `null`."
+directive @oneOf on INPUT_OBJECT
+
+type AuthResponse {
+    success: Boolean!
+    user: User
+}
+
+type Course {
+    createdAt: String!
+    description: String!
+    id: ID!
+    image: String!
+    name: String!
+    price: Float!
+    updatedAt: String!
+}
+
+type CourseLession {
+    courseModuleId: ID!
+    createdAt: String!
+    description: String!
+    id: ID!
+    name: String!
+    updatedAt: String!
+    video: String!
+}
+
+type CourseLessionResponse {
+    lession: CourseLession!
+    success: Boolean!
+}
+
+type CourseModule {
+    courseId: ID!
+    createdAt: String!
+    description: String!
+    id: ID!
+    image: String!
+    name: String!
+    updatedAt: String!
+}
+
+type CourseModuleResponse {
+    courseModule: CourseModule!
+    success: Boolean!
+}
+
+type CourseResponse {
+    course: Course!
+    success: Boolean!
+}
+
+type File {
+    encoding: String!
+    filename: String!
+    mimetype: String!
+}
+
+type LoginResponse {
+    accessToken: String!
+    refreshToken: String!
+    success: Boolean!
+    user: User
+}
+
+type Mutation {
+    createAccount(input: CreateAccountData!): AuthResponse!
+    createCourse(input: CourseInput!): CourseResponse!
+    createCourseLesson(input: CreateLessionInput!): CourseLessionResponse!
+    createCourseModule(input: CreateModuleInput!): CourseModuleResponse!
+    deleteCourse(id: ID!): Boolean!
+    deleteCourseLesson(id: ID!): Boolean!
+    deleteCourseModule(id: ID!): Boolean!
+    login(input: LoginInput!): LoginResponse!
+    updateCourse(input: UpdateCourse!): CourseResponse!
+    updateCourseLesson(input: UpdateLessionInput!): CourseLessionResponse!
+    updateCourseModule(input: UpdateModuleInput!): CourseModuleResponse!
+}
+
+type Query {
+    getCourseLessions(moduleId: ID!): [CourseLession]!
+    getCourseModules(courseId: ID!): [CourseModule]!
+    getCourses: [Course]!
+    getUserEnrolledCourses: [Course]!
+    getUserInfo: User!
+}
+
+type User {
+    createdAt: String!
+    email: String!
+    fullname: String!
+    id: ID!
+    isAdmin: Boolean!
+    updatedAt: String!
+}
+
+scalar Upload
+
+input CourseInput {
+    description: String!
+    image: String!
+    name: String!
+    price: Float!
+}
+
+input CreateAccountData {
+    email: String!
+    fullname: String!
+    password: String!
+}
+
+input CreateLessionInput {
+    courseModuleId: ID!
+    description: String!
+    name: String!
+    video: String!
+}
+
+input CreateModuleInput {
+    courseId: ID!
+    description: String!
+    image: String!
+    name: String!
+}
+
+input LoginInput {
+    email: String!
+    password: String!
+}
+
+input UpdateCourse {
+    description: String!
+    id: ID!
+    image: String!
+    name: String!
+    price: Float!
+}
+
+input UpdateLessionInput {
+    courseModuleId: ID!
+    description: String!
+    id: ID!
+    name: String!
+    video: String!
+}
+
+input UpdateModuleInput {
+    courseId: ID!
+    description: String!
+    id: ID!
+    image: String!
+    name: String!
+}

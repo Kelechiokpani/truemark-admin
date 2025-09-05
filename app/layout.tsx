@@ -1,23 +1,24 @@
-import { Outfit } from 'next/font/google';
+"use client"
 import './globals.css';
-import { ThemeProvider } from "@/components/dashboard/context/ThemeContext";
 import { SidebarProvider } from "@/components/dashboard/context/SidebarContext";
 import NextTopLoader from "nextjs-toploader";
+import { client } from "@/lib/apolloClient";
+import { ApolloProvider, useQuery } from "@apollo/client/react";
+import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/useUserStore";
+import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 
 
-const outfit = Outfit({
-  subsets: ["latin"],
-});
+export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
+  const router = useRouter();
+  // const { token, currentUser } = useUserStore()
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.className} `}>
-      {/*<body className={`${outfit.className} dark:bg-gray-900`}>*/}
+      <body suppressHydrationWarning>
+      {/*<body className={`${outfit.className} `} suppressHydrationWarning>*/}
       <NextTopLoader
         color="#387467"
         initialPosition={0.08}
@@ -29,9 +30,10 @@ export default function RootLayout({
         speed={200}
         shadow="0 0 10px #2299DD,0 0 5px #2299DD"
       />
-        {/*<ThemeProvider>*/}
-          <SidebarProvider>{children}</SidebarProvider>
-        {/*</ThemeProvider>*/}
+      <Toaster position="top-right" />
+      <ApolloProvider client={client}>
+        <SidebarProvider>{children}</SidebarProvider>
+      </ApolloProvider>
       </body>
     </html>
   );

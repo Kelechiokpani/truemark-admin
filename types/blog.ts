@@ -1,15 +1,14 @@
 
 export type CourseList = {
-  _id: number;
-  title: string;
-  slug?: any;
-  metadata?: string;
-  publishedAt?: string;
-  category?: string;
-  status?: 'not-paid' | 'paid';
-  mainImage?: any;
-  mainVideo?: any;
+  id: number;
+  name: string;
+  description?: string;
+  image?: any;
   price?: string;
+  video?: any;
+  publishedAt?: string;
+  status?: 'not-paid' | 'paid';
+
 };
 
 

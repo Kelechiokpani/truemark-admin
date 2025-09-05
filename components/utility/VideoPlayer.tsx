@@ -24,7 +24,7 @@ const HlsVideoPlayer: FC<HlsPlayerProps> = ({src, poster, autoPlay = true, contr
     const combinedRef = playerRef || localPlayerRef;
 
     return (
-        <div className="mt-[4rem]">
+        <div>
             <Player
                 src={src}
                 poster={poster}
@@ -34,7 +34,7 @@ const HlsVideoPlayer: FC<HlsPlayerProps> = ({src, poster, autoPlay = true, contr
                 height={height}
                 hlsConfig={hlsConfig}
                 playerRef={playerRef}
-                style={{borderRadius:"1rem"}}
+                // style={{borderRadius:"1rem"}}
             />
         </div>
     );

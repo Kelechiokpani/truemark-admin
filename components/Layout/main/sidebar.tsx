@@ -2,15 +2,18 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {mainGeneral, mainSideBar} from "@/lib/json";
 import { icons, sideIcons } from "@/public/assets/icons";
 import ButtonComponent from "@/components/molecules/button-component";
 import { Logo, PrimaryLogo, SecondaryLogo } from "@/components/molecules/logo";
+import { useUserStore } from "@/store/useUserStore";
 
 
 
 function SideBar() {
+  const router = useRouter();
+  const { logout } = useUserStore()
   const [isOpen, setIsOpen] = useState(true);
   const toggleSideBar = () => {
     setIsOpen(!isOpen);
@@ -26,7 +29,6 @@ function SideBar() {
 
   const pathname = usePathname();
 
-
   const isRouteActive = (menuLink: string) => {
     // For overview, we want exact match only
     if (menuLink === "/overview") {
@@ -36,11 +38,20 @@ function SideBar() {
     return pathname === menuLink || pathname.startsWith(`${menuLink}/`);
   };
 
+  const handleRoute = () => {
+    try {
+      logout();
+      router.push("/signin");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
+
   return (
 
     <div
       className={cn(
-        " bg-white w-[280px] duration-150 flex flex-col shadow-lg",
+        " bg-white w-[290px] duration-150 flex flex-col shadow-lg",
         isOpen ? null : "w-[115px]"
       )}
     >
@@ -129,7 +140,7 @@ function SideBar() {
             key={index}
             className={cn(
               "hover:bg-green-50 group text-text text-sm font-medium rounded-lg py-3 px-4 flex gap-4 items-center capitalize duration-150",
-              menu.link === pathname ? "bg-[#FEC28B]" : null,
+              menu.link === pathname ? "bg-[#04BA99]" : null,
               isOpen ? null : "hover:bg-transparent !bg-transparent"
             )}
             href={menu.link}
@@ -149,7 +160,8 @@ function SideBar() {
             {isOpen ? <span>{menu.label}</span> : null}
           </Link>
         ))}
-        <button
+
+        <button onClick={handleRoute}
           className={cn(
             "hover:bg-secondary  text-text text-sm font-medium rounded-lg py-3 px-4 flex gap-4 items-center capitalize duration-150"
           )}

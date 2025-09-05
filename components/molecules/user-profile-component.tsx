@@ -13,7 +13,7 @@ import Logo from "@/public/assets/Logo/logo1.png"
 
 
 
-function UserProfileComponent() {
+function UserProfileComponent({data}:any) {
   const profileLinks = [
     {
       label: "My profile",
@@ -44,68 +44,68 @@ function UserProfileComponent() {
         {/* User info (hidden on mobile, visible from md and up) */}
         <div className="hidden md:flex flex-col justify-center">
           <p className="capitalize text-text text-sm font-medium flex gap-3 items-center">
-            Emmanuel <ChevronDown className="text-base text-dark-gray w-4" />
+            {data?.getUserInfo?.fullname} <ChevronDown className="text-base text-dark-gray w-4" />
           </p>
           <p className="text-dark-gray text-xs font-normal">
-            emmanuel@gmail.com
+            {data?.getUserInfo?.email}
           </p>
         </div>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent
-        align="end"
-        className="px-4 py-5 border-none w-[308px] rounded-xl space-y-4 mt-3 ml-9"
-      >
-        <div className="flex gap-4 items-center">
-          <div className="shrink-0 rounded-full h-[40px] w-[40px] relative">
-            <Image
-              alt="user avatar"
-              width={400} height={400}
-              src={Logo}
-              draggable={false}
-              className="rounded-full"
-            />
-          </div>
-          <div className="flex flex-col justify-center">
-            <p className="capitalize  text-sm font-normal flex gap-3 items-center">
-              john doe
-            </p>
-            <p className="text-dark-gray text-xs font-normal">
-              johndoe@gmail.com
-            </p>
-          </div>
-        </div>
+      {/*<DropdownMenuContent*/}
+      {/*  align="end"*/}
+      {/*  className="px-4 py-5 border-none w-[308px] rounded-xl space-y-4 mt-3 ml-9"*/}
+      {/*>*/}
+      {/*  <div className="flex gap-4 items-center">*/}
+      {/*    <div className="shrink-0 rounded-full h-[40px] w-[40px] relative">*/}
+      {/*      <Image*/}
+      {/*        alt="user avatar"*/}
+      {/*        width={400} height={400}*/}
+      {/*        src={Logo}*/}
+      {/*        draggable={false}*/}
+      {/*        className="rounded-full"*/}
+      {/*      />*/}
+      {/*    </div>*/}
+      {/*    <div className="flex flex-col justify-center">*/}
+      {/*      <p className="capitalize  text-sm font-normal flex gap-3 items-center">*/}
+      {/*        john doe*/}
+      {/*      </p>*/}
+      {/*      <p className="text-dark-gray text-xs font-normal">*/}
+      {/*        johndoe@gmail.com*/}
+      {/*      </p>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
 
-        {/*<Separator />*/}
+      {/*  /!*<Separator />*!/*/}
 
-        <div className="flex flex-col gap-1">
-          {profileLinks.map((link, index) => (
-              <Link
-                  key={index}
-                  href={link.link}
-                  className="flex gap-2.5 capitalize py-2 px-2 rounded-md hover:bg-green-50"
-              >
-              <span className="w-5 h-5 flex">
-                {link.icon}
-              </span>
-                <span className="text-sm">
-                    {link.label}
-                </span>
+      {/*  <div className="flex flex-col gap-1">*/}
+      {/*    {profileLinks.map((link, index) => (*/}
+      {/*        <Link*/}
+      {/*            key={index}*/}
+      {/*            href={link.link}*/}
+      {/*            className="flex gap-2.5 capitalize py-2 px-2 rounded-md hover:bg-green-50"*/}
+      {/*        >*/}
+      {/*        <span className="w-5 h-5 flex">*/}
+      {/*          {link.icon}*/}
+      {/*        </span>*/}
+      {/*          <span className="text-sm">*/}
+      {/*              {link.label}*/}
+      {/*          </span>*/}
 
-              </Link>
-            ))}
-          <button className="flex  gap-2.5 capitalize py-2 px-2 rounded-md hover:bg-secondary">
-            <span className="w-5 h-5 flex ">
-              {" "}
-              {sideIcons.logout}
-            </span>
-            <span className="text-sm">
-                     log out
-            </span>
+      {/*        </Link>*/}
+      {/*      ))}*/}
+      {/*    <button className="flex  gap-2.5 capitalize py-2 px-2 rounded-md hover:bg-secondary">*/}
+      {/*      <span className="w-5 h-5 flex ">*/}
+      {/*        {" "}*/}
+      {/*        {sideIcons.logout}*/}
+      {/*      </span>*/}
+      {/*      <span className="text-sm">*/}
+      {/*               log out*/}
+      {/*      </span>*/}
 
-          </button>
-        </div>
-      </DropdownMenuContent>
+      {/*    </button>*/}
+      {/*  </div>*/}
+      {/*</DropdownMenuContent>*/}
     </DropdownMenu>
   );
 }

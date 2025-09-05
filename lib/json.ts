@@ -20,20 +20,15 @@ export const mainSideBar = [
     active_icon: sideIcons.purchase_active,
   },
   // {
-  //   label: "Referral",
-  //   link: "/overview/referral",
-  //   icon: sideIcons.sales,
-  //   active_icon: sideIcons.sales_active,
+  //   label: "Profile",
+  //   link: "/overview/profile",
+  //   icon: sideIcons.settings,
+  //   active_icon: sideIcons.settings_active,
   // },
 
 ];
 export const mainGeneral = [
-  {
-    label: "settings",
-    link: "/overview/settings",
-    icon: sideIcons.settings,
-    active_icon: sideIcons.settings_active,
-  },
+
   {
     label: "help center",
     link: "/overview/help-center",
