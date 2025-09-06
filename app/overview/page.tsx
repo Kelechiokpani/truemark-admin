@@ -2,6 +2,7 @@
 import Overview from "@/components/dashboard/Overview";
 import { useQuery } from "@apollo/client/react";
 import { GET_COURSES } from "@/lib/Query/queries";
+import { EcommerceMetrics } from "@/components/dashboard";
 
 
 export default function OverviewPage() {
@@ -14,6 +15,15 @@ export default function OverviewPage() {
   return (
     <div className="min-h-screen bg-white">
       <Overview data={data}/>
+
+      <div className="grid grid-cols-12 gap-4 md:gap-6">
+        <div className="col-span-12 space-y-6 xl:col-span-7">
+          <EcommerceMetrics />
+        </div>
+
+
+      </div>
+
     </div>
   );
 }

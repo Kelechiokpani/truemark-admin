@@ -17,7 +17,7 @@ export default function Overview({data}) {
 
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className=" bg-white">
       {/* Header */}
       <header className="bg-[#387467] text-white px-6 py-8 rounded-lg">
         <h1 className="text-3xl font-bold">Overview</h1>
@@ -38,7 +38,7 @@ export default function Overview({data}) {
         {/*</nav>*/}
       </header>
 
-      <main className="px-6 py-8 max-w-7xl mx-auto">
+      <main className="px-6 py-6 max-w-7xl mx-auto">
 
         {/*{tabContent[activeTab] ?? <div>Default Content</div>}*/}
 

@@ -62,7 +62,7 @@ export default function CourseListing() {
           <div className="relative w-full md:w-80">
             <input
               type="text"
-              placeholder="Search my courses"
+              placeholder="Search courses"
               className="w-full border rounded-lg px-4 py-2"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
