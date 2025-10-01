@@ -32,7 +32,7 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
       data?.updateCourse.success === true
       toast.success("Course updated successfully!", {
         className:
-          "bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
         duration: 3000,
       })
       console.log(data, "updated Course created");
@@ -94,7 +94,7 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
 
             <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
               <div className="col-span-2 lg:col-span-1">
-                <Label>Course Name</Label>
+                <Label>Update Course Name</Label>
                 <input
                   id="name"
                   name="name"
@@ -110,7 +110,7 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
               </div>
 
               <div className="col-span-2 lg:col-span-1">
-                <Label>Course Price</Label>
+                <Label>Update Course Price</Label>
                 <input
                   id="price"
                   name="price"
@@ -138,7 +138,7 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
               </div>
 
               <div className="col-span-2 lg:col-span-2">
-                <Label>Course Image</Label>
+                <Label>Update Course Image</Label>
                 <input id="image"
                        name="image"
                        placeholder="Insert image"
@@ -164,7 +164,7 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
 
 
               <div className="col-span-2">
-                <Label>Course Description</Label>
+                <Label>Update Course Description</Label>
                 <textarea id="description"
                           name="description"
                           placeholder="Enter course description"

@@ -45,11 +45,11 @@ export default function CourseListing() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-[#387467] text-white px-6 py-8  rounded-lg  flex justify-between">
+      <header className="bg-[#387467] text-white px-6 py-8  rounded-md  flex justify-between">
         <h1 className="text-3xl font-bold">Certification Courses</h1>
         <button
           onClick={openModal}
-          className="bg-[#ffff] text-black px-6  rounded-2xl hover:bg-gray-300"
+          className="bg-[#ffff] text-black px-6  rounded-md hover:bg-gray-300"
         >
           Add Course
         </button>
@@ -84,7 +84,7 @@ export default function CourseListing() {
             description={empty_details.description}
           />
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredCourses.map((post, key) => (
               <CourseItem key={key} courseListing={post} />
             ))}
@@ -92,7 +92,6 @@ export default function CourseListing() {
         )}
 
       </div>
-
       <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
         <Create_Course onClose={closeModal} isOpen={isOpen} />
       </Modal>

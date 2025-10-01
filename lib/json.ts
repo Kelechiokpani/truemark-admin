@@ -14,11 +14,13 @@ export const mainSideBar = [
     active_icon: sideIcons.inventory_active,
   },
   {
-    label: "checkout-cart",
-    link: "/overview/cart",
+    label: "customer- Enquiry",
+    link: "/overview/enquiry",
     icon: sideIcons.purchase,
     active_icon: sideIcons.purchase_active,
   },
+
+
   // {
   //   label: "Profile",
   //   link: "/overview/profile",

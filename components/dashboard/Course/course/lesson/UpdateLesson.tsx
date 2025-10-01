@@ -24,9 +24,9 @@ const Update_Lesson =({ onClose, courseListing,  isOpen })=> {
     awaitRefetchQueries: true, refetchQueries:[GET_COURSES_LESSONS], variables:{moduleId:courseListing?.id},
     onCompleted: (data:any) => {
       data?.updateCourseLesson?.success === true
-      toast.success("Course Lesson updated successfully!", {
+      toast.success("Lesson updated successfully!", {
         className:
-          "bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
         duration: 3000,
       })
       onClose(); // close modal only after success
@@ -72,10 +72,10 @@ const Update_Lesson =({ onClose, courseListing,  isOpen })=> {
       className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
       <div className="px-2 pr-14">
         <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-          Create New Lesson
+          Update Lesson
         </h4>
         <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-          create new Lesson fro this module.
+          update the details of this Lesson.
         </p>
       </div>
       <div className="flex flex-col">
@@ -84,7 +84,7 @@ const Update_Lesson =({ onClose, courseListing,  isOpen })=> {
 
             <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
               <div className="col-span-2 lg:col-span-2">
-                <Label>Lesson Name</Label>
+                <Label>Update Lesson Name</Label>
                 <input
                   id="name"
                   name="name"
@@ -100,7 +100,7 @@ const Update_Lesson =({ onClose, courseListing,  isOpen })=> {
               </div>
 
               <div className="col-span-2 lg:col-span-2">
-                <Label>Lesson Video</Label>
+                <Label>Update Lesson Video</Label>
                 <input
                   id="video"
                   name="video"
@@ -134,7 +134,7 @@ const Update_Lesson =({ onClose, courseListing,  isOpen })=> {
               </div>
 
               <div className="col-span-2">
-                <Label>Lesson Description</Label>
+                <Label>Update Lesson Description</Label>
                 <textarea id="description"
                           name="description"
                           placeholder="Enter Lesson description"

@@ -14,9 +14,9 @@ const Delete_Module =({ onClose,  isOpen, course, module })=> {
     awaitRefetchQueries: true, refetchQueries:[GET_COURSES_MODULES], variables:{courseId:module?.id},
     onCompleted: (data:any) => {
       data?.deleteCourseModule.success === true
-      toast.success("Course Module Deleted successfully!", {
+      toast.success("Module Deleted successfully!", {
         className:
-          "bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
         duration: 3000,
       })
       onClose(); // close modal only after success
@@ -88,7 +88,7 @@ const Delete_Module =({ onClose,  isOpen, course, module })=> {
                 </svg>
                 please wait...
               </>
-            ) : "Update Module"}
+            ) : "Delete Module"}
           </button>
         </div>
         {error?.message && (

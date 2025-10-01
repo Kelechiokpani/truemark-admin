@@ -8,6 +8,22 @@ schema {
 "Indicates exactly one field must be supplied and this field must not be `null`."
 directive @oneOf on INPUT_OBJECT
 
+type Assignment {
+    courseId: ID!
+    description: String
+    id: ID!
+    questions: [Question]!
+    title: String!
+}
+
+type AssignmentSubmission {
+    answers: [SubmissionAnswer]!
+    assignmentId: ID!
+    id: ID!
+    score: Int!
+    userId: ID!
+}
+
 type AuthResponse {
     success: Boolean!
     user: User
@@ -58,10 +74,26 @@ type CourseResponse {
     success: Boolean!
 }
 
+type Enquiry {
+    createdAt: String!
+    email: String!
+    id: ID!
+    message: String!
+    name: String!
+    phoneNumber: String
+    subject: String!
+    updatedAt: String!
+}
+
 type File {
     encoding: String!
     filename: String!
     mimetype: String!
+}
+
+type ForgetPasswordResponse {
+    message: String!
+    success: Boolean!
 }
 
 type LoginResponse {
@@ -72,25 +104,67 @@ type LoginResponse {
 }
 
 type Mutation {
+    buyCourse(courseIds: [ID!]!): PaymentResponse!
     createAccount(input: CreateAccountData!): AuthResponse!
+    createAssignment(input: CreateAssignmentInput!): Assignment!
     createCourse(input: CourseInput!): CourseResponse!
     createCourseLesson(input: CreateLessionInput!): CourseLessionResponse!
     createCourseModule(input: CreateModuleInput!): CourseModuleResponse!
+    createEnquiry(input: CreateEnquiryInput!): Enquiry!
     deleteCourse(id: ID!): Boolean!
     deleteCourseLesson(id: ID!): Boolean!
     deleteCourseModule(id: ID!): Boolean!
+    forgetPassword(email: String!): ForgetPasswordResponse!
     login(input: LoginInput!): LoginResponse!
+    submitAssignment(input: SubmitAssignmentInput!): AssignmentSubmission!
     updateCourse(input: UpdateCourse!): CourseResponse!
     updateCourseLesson(input: UpdateLessionInput!): CourseLessionResponse!
     updateCourseModule(input: UpdateModuleInput!): CourseModuleResponse!
+    verifyForgotPassword(input: VerifyForgotPasswordInput!): ForgetPasswordResponse!
+}
+
+type Option {
+    id: ID!
+    optionText: String!
+    questionId: ID!
+}
+
+type PaymentResponse {
+    paymentReference: String!
+    paymentUrl: String!
+    success: Boolean!
 }
 
 type Query {
+    getAssignment(assignmentId: ID!): Assignment
+    getAssignmentSubmission(submissionId: ID!): AssignmentSubmission
+    getAssignmentSubmissionsByAssignmentId(assignmentId: ID!): [AssignmentSubmission]
+    getAssignmentsByCourseId(courseId: ID!): [Assignment]
     getCourseLessions(moduleId: ID!): [CourseLession]!
     getCourseModules(courseId: ID!): [CourseModule]!
     getCourses: [Course]!
+    getEnquiries(limit: Int, page: Int): [Enquiry!]!
+    getEnrolledCourseModules(courseId: ID!): [CourseModule]!
+    getEnrolledModuleLessions(moduleId: ID!): [CourseLession]!
     getUserEnrolledCourses: [Course]!
     getUserInfo: User!
+    getUserSubmissionsForAssignment(assignmentId: ID!): [AssignmentSubmission]
+    verifyPayment(reference: String!): Boolean!
+}
+
+type Question {
+    assignmentId: ID!
+    correctAnswer: String!
+    id: ID!
+    options: [Option]!
+    questionText: String!
+}
+
+type SubmissionAnswer {
+    id: ID!
+    questionId: ID!
+    selectedOptionId: ID!
+    submissionId: ID!
 }
 
 type User {
@@ -117,6 +191,21 @@ input CreateAccountData {
     password: String!
 }
 
+input CreateAssignmentInput {
+    courseId: ID!
+    description: String
+    questions: [CreateQuestionInput]!
+    title: String!
+}
+
+input CreateEnquiryInput {
+    email: String!
+    message: String!
+    name: String!
+    phoneNumber: String
+    subject: String!
+}
+
 input CreateLessionInput {
     courseModuleId: ID!
     description: String!
@@ -131,9 +220,29 @@ input CreateModuleInput {
     name: String!
 }
 
+input CreateOptionInput {
+    optionText: String!
+}
+
+input CreateQuestionInput {
+    correctAnswer: String!
+    options: [CreateOptionInput]!
+    questionText: String!
+}
+
 input LoginInput {
     email: String!
     password: String!
+}
+
+input SubmitAnswerInput {
+    questionId: ID!
+    selectedOptionId: ID!
+}
+
+input SubmitAssignmentInput {
+    answers: [SubmitAnswerInput]!
+    assignmentId: ID!
 }
 
 input UpdateCourse {
@@ -158,4 +267,10 @@ input UpdateModuleInput {
     id: ID!
     image: String!
     name: String!
+}
+
+input VerifyForgotPasswordInput {
+    email: String!
+    otp: String!
+    password: String!
 }

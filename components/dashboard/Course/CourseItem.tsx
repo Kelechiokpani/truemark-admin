@@ -33,7 +33,7 @@ const CourseItem = ({ courseListing }: { courseListing: CourseList }) => {
     <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer">
       <div className="relative">
         <Link
-          href={`/overview/course/${courseListing.id}`}
+          href={`/overview/course/${courseListing?.id}`}
           onClick={handleClick}
         >
           <Image

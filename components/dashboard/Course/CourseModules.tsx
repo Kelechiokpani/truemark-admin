@@ -10,7 +10,8 @@ import { useQuery } from "@apollo/client/react";
 import { GET_COURSES_MODULES } from "@/lib/Query/queries";
 import CenteredLoader from "@/components/utility/Loader";
 import EmptyContainer from "@/components/utility/EmptyContainer";
-import CourseItem from "@/components/dashboard/Course/CourseItem";
+import { Plus, Eye, History } from "lucide-react";
+import Link from "next/link";
 
 const empty_details = {
   title: "Your course Module List is empty",
@@ -22,15 +23,19 @@ const empty_details = {
 const CourseModules = () => {
   const course = useCourseStore((s) => s.selectedCourse);
   const params = useParams();
+  const { isOpen, openModal, closeModal } = useModal();
+  const router = useRouter();
 
   const { data, loading, error} = useQuery(GET_COURSES_MODULES, {
     fetchPolicy: "cache-and-network",
-    variables:{courseId:params?.id},
+    variables:{courseId:course?.id},
     // fetchPolicy: 'network-only',
   }) as any;
 
-  const { isOpen, openModal, closeModal } = useModal();
-  const router = useRouter();
+
+  const handleRoute = () => {
+    router.push(`/overview/course/${course?.id}/exam-setup`)
+  }
 
 
     return (
@@ -41,21 +46,52 @@ const CourseModules = () => {
         >
           ← Back
         </button>
-
-        <header className="bg-[#387467] text-white px-6 py-8  rounded-lg  flex justify-between mt-2">
+        <header className="bg-[#387467] text-white px-6 py-8 rounded-md  flex justify-between mt-2">
           <h1 className="text-3xl font-bold">Course Modules</h1>
           {/*<h1 className="text-1xl font-bold">{data?.getCourseModules?.name}</h1>*/}
-          <button
-            onClick={openModal}
-            className="bg-[#ffff] text-black px-6 py-2  rounded-2xl hover:bg-gray-300"
-          >
-            Add Module
-          </button>
+          <div className="gap-4 flex">
+            <button
+              onClick={openModal}
+              className="bg-[#ffff] text-black px-5 py-2 flex rounded-md hover:bg-gray-300"
+            >
+              <Plus size={16} className="mt-1 mr-2" />
+              Add Module
+            </button>
+          </div>
         </header>
+
+        <div className="py-6 px-6 flex justify-between gap-6">
+          <h1 className="text-1xl font-bold">Course Assessment</h1>
+
+          <div className="flex gap-6">
+            <button
+              onClick={handleRoute}
+              className="bg-[#387467] flex text-white px-4 py-2 rounded-md text-sm ">
+              {/*className="bg-[#387467] flex text-white px-4 py-2 rounded-md font-bold">*/}
+              <Plus size={16} className="mt-0.5 mr-2" />Add Exam
+            </button>
+
+            <Link href={`/overview/course/${course?.id}/exam-list`}>
+              <button
+                className="bg-[#387467] flex text-white text-sm  px-4 py-2 rounded-md ">
+                <Eye size={16} className="mt-0.5 mr-2" /> View Exams
+              </button>
+            </Link>
+
+            <Link href={`/overview/course/${course?.id}/exam-history`}>
+              <button
+                className="bg-[#387467] flex text-white text-sm px-4 py-2 rounded-md ">
+                <History size={16} className="mt-0.5 mr-2" /> Exams History
+              </button>
+            </Link>
+
+
+          </div>
+        </div>
 
         {loading ? (
           <div className="flex items-center justify-center min-h-[300px] w-full">
-            <CenteredLoader/>
+            <CenteredLoader />
           </div>
         ) : data?.getCourseModules.length === 0 ? (
           <EmptyContainer
@@ -63,13 +99,12 @@ const CourseModules = () => {
             description={empty_details.description}
           />
         ) : (
-          <Accordion course={course} modules={data?.getCourseModules}/>
-        )}
+          <Accordion course={course} modules={data?.getCourseModules} />
+         )}
 
         <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
           <Create_Module onClose={closeModal} isOpen={isOpen} course={course} />
         </Modal>
-
       </div>
     )
 }

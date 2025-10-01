@@ -33,7 +33,7 @@ const Create_Course =  ({ onClose, isOpen }) => {
       data?.createCourse.success === true
       toast.success("Course created successfully!", {
         className:
-          "bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
         duration: 3000,
       })
       console.log(data, "course created");
@@ -188,6 +188,7 @@ const Create_Course =  ({ onClose, isOpen }) => {
             onClick={() => formik.handleSubmit()} disabled={loading || uploadLoading}
             type="button"
             className="inline-flex items-center justify-center rounded-xl   text-white font-semibold   shadow-md px-8  rounded-md bg-[#387467] text-white py-3  disabled:opacity-60"
+
             // onClick={() => formik.handleSubmit()}
             // disabled={loading}
           >

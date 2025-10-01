@@ -5,7 +5,7 @@ import Create_Lesson from "@/components/dashboard/Course/course/lesson/CreateLes
 import { useModal } from "@/components/hooks/useModal";
 import CourseVideoListing from "@/components/dashboard/Course/CourseVideo/CourseVideoListing";
 import Update_Module from "@/components/dashboard/Course/course/module/UpdateModule";
-import {  Pencil, Trash2 } from "lucide-react";
+import { Pencil, Plus, Trash2 } from "lucide-react";
 import Delete_Module from "@/components/dashboard/Course/course/module/DeleteModule";
 
 
@@ -37,7 +37,7 @@ import Delete_Module from "@/components/dashboard/Course/course/module/DeleteMod
                 className="px-8 flex items-center bg-gray-300 justify-between w-full py-4 font-medium text-gray-700 gap-3"
                 onClick={() => toggle(module?.id)}
               >
-                <span>{module?.name}</span>
+                <span className="text-xs">{module?.name}</span>
                 <div>
                   <svg
                     className={`w-3 h-3 transition-transform ${
@@ -62,32 +62,33 @@ import Delete_Module from "@/components/dashboard/Course/course/module/DeleteMod
 
             {openId === module?.id && (
               <div className="text-gray-500 dark:text-gray-400">
-                <div className="flex py-8 px-4 justify-end">
-                  {/*<h3 className="font-bold capitalize">{module?.name}</h3>*/}
-                  <div className="flex justify-end gap-6">
+                <div className="flex py-8 px-6 gap-6 justify-between">
+                  <div>
                     <button
                       onClick={openModal}
-                      className="bg-[#387467] text-white px-6 py-2   rounded-lg"
-                    >
-                      Add Lesson
+                      className="bg-[#387467] flex text-white px-4 py-2 rounded-md">
+                      <Plus size={16} className="mt-1 mr-2" /> Add video Lesson
                     </button>
+                  </div>
 
-                    <button className="hover:bg-gray-300 text-blue-500 bg-gray-300 px-3 py-2 flex rounded-lg"
+                  <div className="flex gap-4 justify-end">
+                    <button className="hover:bg-gray-300 tex-500 text-sm bg-gray-300 px-3 py-2 flex rounded-md"
                             onClick={openUpdate}
                     >
-                      <Pencil size={16} className="mt-1 mr-2 text-blue-500" /> edit module
+                      <Pencil size={16} className="mt-1 mr-2 text-500" /> edit module
                     </button>
-                    <button className="hover:bg-red-300 bg-red-200 px-3 text-red-600  py-2 flex rounded-lg"
-                      onClick={openDelete}
+                    <button className="hover:bg-red-300 text-sm bg-red-100 px-3 text-red-600  py-2 flex rounded-md"
+                            onClick={openDelete}
                     >
-                      <Trash2 size={16} className="mt-1 mr-2 text-red-600" /> delete module
+                      <Trash2 size={16} className="mt-1 mr-2 text-red-700" /> delete module
                     </button>
                   </div>
 
                 </div>
+
                 <CourseVideoListing id={id} module={module} />
-                <div className="flex justify-start bg-gray-200 py-8 px-3">
-                  <span className=" capitalize">{module?.description}</span>
+                <div className="flex justify-start border border-green-900 py-8 px-3">
+                  <span className="py-3 sentence">{module?.description}</span>
                 </div>
 
                 <div>
@@ -106,7 +107,6 @@ import Delete_Module from "@/components/dashboard/Course/course/module/DeleteMod
 
               </div>
             )}
-
 
 
             {/*create new lesson*/}

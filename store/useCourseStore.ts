@@ -46,6 +46,7 @@ export const useCourseStore = create<CourseState>((set) => ({
 
 
   setSelectedCourse: (course) => set({ selectedCourse: course }),
+
   clearSelectedCourse: () => set({ selectedCourse: null }),
 
   addToCart: (course) =>

@@ -22,13 +22,13 @@ const ResetPassword = () => {
             <input
               type="password"
               placeholder="New Password"
-              className="w-full text-[#387467] rounded-md border border-gray-300 mt-4 p-3 bg-[#fff9d9] focus:outline-none focus:ring-2 focus:ring-[#387467]"
+              className="w-full text-[#387467] rounded-md border border-gray-300 mt-4 p-3  focus:outline-none focus:ring-2 focus:ring-[#387467]"
             />
 
             <input
               type="password"
               placeholder="Comfirm Password"
-              className="w-full text-[#387467] rounded-md border border-gray-300 mt-4 p-3 bg-[#fff9d9] focus:outline-none focus:ring-2 focus:ring-[#387467]"
+              className="w-full text-[#387467] rounded-md border border-gray-300 mt-4 p-3  focus:outline-none focus:ring-2 focus:ring-[#387467]"
             />
             <button
               type="submit"

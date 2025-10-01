@@ -36,7 +36,7 @@ export default function CourseVideoListing({id, module}) {
   }, [searchTerm, data]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className=" bg-white">
       <div className="px-6 py-8 max-w-7xl mx-auto">
 
         {loading ? (

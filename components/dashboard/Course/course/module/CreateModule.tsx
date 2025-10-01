@@ -21,9 +21,9 @@ const Create_Module =({ onClose, isOpen, course })=> {
 
     onCompleted: (data:any) => {
       data?.createCourseModule.success === true
-      toast.success("Course Module created successfully!", {
+      toast.success("Module created successfully!", {
         className:
-          "bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
         duration: 3000,
       })
       console.log(data, "course Module Created");

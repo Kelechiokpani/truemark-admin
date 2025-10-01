@@ -130,6 +130,7 @@ export const DELETE_COURSE_LESSON = gql`
 
 
 // TRUE-MARK USER FLOW
+
 export const CREATE_USERS = gql`
     mutation CreateAccount($input: CreateAccountData!) {
         createAccount(input: $input) {
@@ -165,4 +166,36 @@ export const LOGIN_USERS = gql`
     }
 `;
 
+export const FORGOT_USERS_PASSWORD = gql`
+    mutation ForgetPassword($email: String!) {
+        forgetPassword(email: $email) {
+            success
+            message
+        }
+    }
+`;
+
+
+
+
+export const CREATE_EXAM_ASSIGNMENT = gql`
+    mutation CreateAssignment($input: CreateAssignmentInput!) {
+        createAssignment(input: $input) {
+            id
+            courseId
+            title
+            description
+            questions {
+                id
+                assignmentId
+                questionText
+                options {
+                    id
+                    questionId
+                    optionText
+                }
+            }
+        }
+    }
+`;
 

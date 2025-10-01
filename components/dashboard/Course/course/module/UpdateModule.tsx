@@ -21,9 +21,9 @@ const Update_Module =({ onClose,  isOpen, course, module })=> {
     awaitRefetchQueries: true, refetchQueries:[GET_COURSES_MODULES], variables:{courseId:module?.id},
     onCompleted: (data:any) => {
       data?.updateCourseModule.success === true
-      toast.success("Course Module updated successfully!", {
+      toast.success("Module updated successfully!", {
         className:
-          "bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
         duration: 3000,
       })
       console.log(data, "course Module Updated");
@@ -75,7 +75,7 @@ const Update_Module =({ onClose,  isOpen, course, module })=> {
           <div className="mt-7">
             <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
               <div className="col-span-2 lg:col-span-2">
-                <Label>Module Name</Label>
+                <Label>Update Module Name</Label>
                 <input
                   id="name"
                   name="name"
@@ -91,7 +91,7 @@ const Update_Module =({ onClose,  isOpen, course, module })=> {
               </div>
 
               <div className="col-span-2">
-                <Label>Module Description</Label>
+                <Label>Update Module Description</Label>
                 <textarea id="description"
                           name="description"
                           placeholder="Enter Module description"

@@ -26,9 +26,9 @@ const Create_Lesson =({ onClose, modules,  isOpen })=> {
     awaitRefetchQueries: true, refetchQueries:[GET_COURSES_LESSONS], variables:{moduleId:modules?.id},
     onCompleted: (data:any) => {
       data?.createCourseLesson?.success === true
-      toast.success("Course Lesson created successfully!", {
+      toast.success("Lesson created successfully!", {
         className:
-          "bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
         duration: 3000,
       })
       console.log(data, "course created");
@@ -73,10 +73,10 @@ const Create_Lesson =({ onClose, modules,  isOpen })=> {
       className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
       <div className="px-2 pr-14">
         <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-          Create New Lesson
+          Create Module Lesson
         </h4>
         <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-          create new Lesson fro this module.
+          create Lesson for this module.
         </p>
       </div>
       <div className="flex flex-col">
@@ -85,7 +85,7 @@ const Create_Lesson =({ onClose, modules,  isOpen })=> {
 
             <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
               <div className="col-span-2 lg:col-span-2">
-                <Label>Lesson Name</Label>
+                <Label>Module Lesson Name</Label>
                 <input
                   id="name"
                   name="name"
@@ -101,7 +101,7 @@ const Create_Lesson =({ onClose, modules,  isOpen })=> {
               </div>
 
               <div className="col-span-2 lg:col-span-2">
-                <Label>Lesson Video</Label>
+                <Label>Module Lesson Video</Label>
                 <input
                         id="video"
                         name="video"
@@ -135,7 +135,7 @@ const Create_Lesson =({ onClose, modules,  isOpen })=> {
               </div>
 
               <div className="col-span-2">
-                <Label>Lesson Description</Label>
+                <Label>Module Lesson Description</Label>
                 <textarea id="description"
                           name="description"
                           placeholder="Enter Lesson description"

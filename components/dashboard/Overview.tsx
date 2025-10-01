@@ -19,7 +19,7 @@ export default function Overview({data}) {
   return (
     <div className=" bg-white">
       {/* Header */}
-      <header className="bg-[#387467] text-white px-6 py-8 rounded-lg">
+      <header className="bg-[#387467] text-white px-6 py-8 rounded-md">
         <h1 className="text-3xl font-bold">Overview</h1>
         {/*<nav className="flex flex-wrap mt-8 space-x-4">*/}
         {/*  {tabs.map((tab) => (*/}

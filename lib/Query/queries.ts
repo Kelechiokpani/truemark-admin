@@ -75,3 +75,109 @@ export const GET_USERS = gql`
         }
     }
 `;
+
+
+
+
+
+// TRUE-MARK USER ENQUIRY
+
+export const GET_CUSTOMER_ENQUIRY = gql`
+    query GetEnquiries($page: Int, $limit: Int) {
+        getEnquiries(page: $page, limit: $limit) {
+            id
+            name
+            email
+            phoneNumber
+            subject
+            message
+            createdAt
+            updatedAt
+        }
+    }
+`;
+
+
+
+// TRUE-MARK USER EXAMS
+export const GET_CUSTOMERS_ASSESSMENT = gql`
+    query GetAssignmentsByCourseId($courseId: ID!) {
+        getAssignmentsByCourseId(courseId: $courseId) {
+            id
+            courseId
+            title
+            description
+            questions {
+                id
+                assignmentId
+                questionText
+                options {
+                    id
+                    questionId
+                    optionText
+                }
+            }
+        }
+    }
+`;
+
+export const GET_ASSESSMENT = gql`
+    query GetAssignment($assignmentId: ID!) {
+        getAssignment(assignmentId: $assignmentId) {
+            id
+            courseId
+            title
+            description
+            questions {
+                id
+                assignmentId
+                questionText
+                options {
+                    id
+                    questionId
+                    optionText
+                }
+                correctAnswer
+            }
+        }
+    }
+`;
+
+
+// SUBMISSION ---
+
+export const GET_CUSTOMER_SUBMISSION = gql`
+    query GetAssignmentSubmissionsByAssignmentId($assignmentId: ID!) {
+        getAssignmentSubmissionsByAssignmentId(assignmentId: $assignmentId) {
+            id
+            assignmentId
+            userId
+            score
+            answers {
+                id
+                submissionId
+                questionId
+                selectedOptionId
+            }
+        }
+    }
+`;
+
+
+export const GET_SUBMISSION = gql`
+     query GetAssignmentSubmission($submissionId: ID!) {
+        getAssignmentSubmission(submissionId: $submissionId) {
+            id
+            assignmentId
+            userId
+            score
+            answers {
+                id
+                submissionId
+                questionId
+                selectedOptionId
+            }
+        }
+    }
+`;
+
