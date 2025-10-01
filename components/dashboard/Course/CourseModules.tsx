@@ -78,12 +78,6 @@ const CourseModules = () => {
               </button>
             </Link>
 
-            <Link href={`/overview/course/${course?.id}/exam-history`}>
-              <button
-                className="bg-[#387467] flex text-white text-sm px-4 py-2 rounded-md ">
-                <History size={16} className="mt-0.5 mr-2" /> Exams History
-              </button>
-            </Link>
 
 
           </div>
