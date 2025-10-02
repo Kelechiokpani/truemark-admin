@@ -28,7 +28,6 @@ const validationSchema = Yup.object().shape({
 
 
 
-
 export default function ExamSetup() {
   const params = useParams();
   const router = useRouter();
@@ -45,9 +44,9 @@ export default function ExamSetup() {
         })
       formik.resetForm()
       }
-
     },
   });
+
 
 
   const formik = useFormik({
@@ -68,7 +67,7 @@ export default function ExamSetup() {
         await CreateAssignment({
           variables: {
             input: {
-              courseId: params.id,
+              courseId: params?.courseId,
               description: values.description,
               title: values.title,
               questions: values.questions.map((q:any) => ({

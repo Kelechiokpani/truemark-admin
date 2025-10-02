@@ -24,9 +24,6 @@ export default function CourseVideoListing({id, module}) {
     // fetchPolicy: 'network-only',
   }) as any;
 
-  console.log(module," module....");
-  console.log(data," video....");
-
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredCourses = useMemo(() => {
