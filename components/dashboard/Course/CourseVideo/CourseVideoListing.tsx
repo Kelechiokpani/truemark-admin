@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client/react";
 import { GET_COURSES_LESSONS } from "@/lib/Query/queries";
 import CenteredLoader from "@/components/utility/Loader";
 import CourseVideoItem from "@/components/dashboard/Course/CourseVideo/CourseVideoItem";
+import { useParams, useRouter } from "next/navigation";
 
 
 const empty_details = {
@@ -15,16 +16,21 @@ const empty_details = {
 }
 
 export default function CourseVideoListing({id, module}) {
+  const params = useParams();
+  const router = useRouter();
 
   const { data, loading, error} = useQuery(GET_COURSES_LESSONS, {
     fetchPolicy: "cache-and-network",  variables:{moduleId:id},
     // fetchPolicy: 'network-only',
   }) as any;
 
+  console.log(module," module....");
+  console.log(data," video....");
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredCourses = useMemo(() => {
-    let List: any = data?.getCourseLessions || [];
+    let List: any = data?.getCourseLessions;
 
     if (searchTerm.trim() !== "") {
       List = List.filter((c: any) =>

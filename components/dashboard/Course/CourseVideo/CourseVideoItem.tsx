@@ -17,7 +17,6 @@ import Delete_Lesson from "@/components/dashboard/Course/course/lesson/DeleteLes
 
 const CourseVideoItem = ({ courseListing, module }: { courseListing: CourseList, module:any }) => {
   const {image,  video, name, price, id, description } = courseListing;
-
   const { isUpdate,  openUpdate, closeUpdate,  isDelete, openDelete, closeDelete  } = useModal();
 
 

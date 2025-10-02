@@ -28,7 +28,7 @@ const CourseModules = () => {
 
   const { data, loading, error} = useQuery(GET_COURSES_MODULES, {
     fetchPolicy: "cache-and-network",
-    variables:{courseId:course?.id},
+    variables:{courseId:params?.courseId},
     // fetchPolicy: 'network-only',
   }) as any;
 

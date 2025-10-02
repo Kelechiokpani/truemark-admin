@@ -21,8 +21,6 @@ const empty_details = {
 export default function CourseListing() {
   const { data, loading, error} = useQuery(GET_COURSES, {
     fetchPolicy: "cache-and-network",
-    // fetchPolicy: 'network-only',
-    // variables:{seasonId:seasonId},
   }) as any;
 
 

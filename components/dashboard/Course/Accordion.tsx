@@ -7,13 +7,14 @@ import CourseVideoListing from "@/components/dashboard/Course/CourseVideo/Course
 import Update_Module from "@/components/dashboard/Course/course/module/UpdateModule";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import Delete_Module from "@/components/dashboard/Course/course/module/DeleteModule";
+import { useParams, useRouter } from "next/navigation";
 
 
  const Accordion =({course, modules})=> {
    const [id, setId] = useState('')
    const { isOpen, openModal, closeModal, isUpdate, openUpdate, closeUpdate, isDelete, openDelete, closeDelete  } = useModal();
-
    const [openId, setOpenId] = useState<string | null>(null);
+
 
     const toggle = (id: string) => {
       setOpenId(openId === id ? null : id);
@@ -91,6 +92,15 @@ import Delete_Module from "@/components/dashboard/Course/course/module/DeleteMod
                   <span className="py-3 sentence">{module?.description}</span>
                 </div>
 
+
+                {/*create new lesson*/}
+                <div>
+                  <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
+                    <Create_Lesson onClose={closeModal} isOpen={isOpen} modules={module} />
+                  </Modal>
+                </div>
+
+
                 <div>
                   <Modal isOpen={isUpdate} onClose={closeUpdate} className="max-w-[700px] m-4">
                     <Update_Module isOpen={isUpdate} onClose={closeUpdate} course={course} module={module} />
@@ -109,12 +119,7 @@ import Delete_Module from "@/components/dashboard/Course/course/module/DeleteMod
             )}
 
 
-            {/*create new lesson*/}
-            <div>
-              <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
-                <Create_Lesson onClose={closeModal} isOpen={isOpen} modules={module} />
-              </Modal>
-            </div>
+
 
 
           </div>

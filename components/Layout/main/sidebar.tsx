@@ -39,7 +39,7 @@ function SideBar() {
   return (
     <div
       className={cn(
-        "bg-white w-[290px] duration-150 flex flex-col shadow-lg",
+        "bg-white w-[300px] duration-150 flex flex-col shadow-lg",
         isOpen ? null : "w-[100px]"
       )}
     >
