@@ -61,7 +61,7 @@ const CourseVideoItem = ({ courseListing, module }: { courseListing: CourseList,
 
             <div className="p-4 shadow-sm hover:shadow-md border">
               <p className="font-bold capitalize ">{name}</p>
-              <span className=" text-xs">{description}</span>
+              {/*<span className=" text-xs">{description}</span>*/}
               {/*<span className="font-semibold line-clamp-2">{description}</span>*/}
            </div>
 
