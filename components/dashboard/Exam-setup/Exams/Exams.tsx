@@ -18,7 +18,7 @@ const Exams_Assessment = ()=> {
   const router = useRouter();
 
   const { data, loading, error} = useQuery(GET_CUSTOMERS_ASSESSMENT, {
-    variables:{courseId:course?.id},
+    variables:{courseId:params?.courseId},
     fetchPolicy: "cache-and-network",
     // fetchPolicy: 'network-only',
   }) as any;
