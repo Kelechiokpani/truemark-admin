@@ -14,7 +14,7 @@ import { ArrowRight } from "lucide-react";
 
 
 
-const Exam_AssessmentList  =  ({data}) => {
+const Assessment_History_List  =  ({data}) => {
   const course = useCourseStore((s) => s.selectedCourse);
   const params = useParams();
   const router = useRouter();
@@ -144,4 +144,4 @@ const Exam_AssessmentList  =  ({data}) => {
   )
 }
 
-export default Exam_AssessmentList
+export default Assessment_History_List

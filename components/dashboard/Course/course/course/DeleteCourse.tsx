@@ -1,25 +1,37 @@
 'use client'
 import Button from "@/components/ui/button/Button";
-import React, { useState } from "react";
+import React  from "react";
 import { useMutation } from "@apollo/client/react";
 import { DELETE_COURSE } from "@/lib/Mutation/mutation";
 import { useFormik } from "formik";
 import { toast } from "react-hot-toast";
 import { GET_COURSES } from "@/lib/Query/queries";
+import { useParams } from "next/navigation";
 
 
 const Delete_Course =({ onClose, isOpen, courseListing })=> {
+  const params = useParams();
   const [DeleteCourse, { loading, error }] = useMutation(DELETE_COURSE, {
     awaitRefetchQueries: true, refetchQueries:[GET_COURSES],
     onCompleted: (data:any) => {
       data?.deleteCourse.success === true
-      toast.success("Course Deleted successfully!", {
-        className:
-          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+      toast.success("Lesson deleted successfully!", {
+        style: {
+          background: "#387467",
+          color: "#fff",
+          padding: "0.5rem 1rem",
+          borderRadius: "0.5rem",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          fontWeight: 500,
+          fontSize: "0.875rem",
+        },
+        position: "bottom-right", // 👈 this moves it to bottom-right
         duration: 3000,
-      })
+      });
+
     },
   });
+  console.log(courseListing, "courseListing");
 
   const formik = useFormik({
     initialValues: {

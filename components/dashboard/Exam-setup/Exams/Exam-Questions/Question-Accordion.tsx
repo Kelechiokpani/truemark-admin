@@ -11,7 +11,6 @@ const Question_Accordion = ({ course, modules }) => {
     setOpenId(openId === id ? null : id);
   };
 
-  console.log(selectedModuleId);
 
   return (
      <div>

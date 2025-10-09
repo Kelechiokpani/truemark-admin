@@ -14,7 +14,7 @@ export const mainSideBar = [
     active_icon: sideIcons.inventory_active,
   },
   {
-    label: "customer- Enquiry",
+    label: "Enquires",
     link: "/overview/enquiry",
     icon: sideIcons.purchase,
     active_icon: sideIcons.purchase_active,

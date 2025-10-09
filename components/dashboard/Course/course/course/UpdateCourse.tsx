@@ -31,11 +31,18 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
     onCompleted: (data:any) => {
       data?.updateCourse.success === true
       toast.success("Course updated successfully!", {
-        className:
-          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+        style: {
+          background: "#387467",
+          color: "#fff",
+          padding: "0.5rem 1rem",
+          borderRadius: "0.5rem",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          fontWeight: 500,
+          fontSize: "0.875rem",
+        },
+        position: "bottom-right", // 👈 this moves it to bottom-right
         duration: 3000,
-      })
-      console.log(data, "updated Course created");
+      });
       onClose(); // close modal only after success
     },
   });
@@ -93,7 +100,7 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
           <div className="mt-7">
 
             <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-              <div className="col-span-2 lg:col-span-1">
+              <div className="col-span-2 lg:col-span-2">
                 <Label>Update Course Name</Label>
                 <input
                   id="name"
@@ -109,7 +116,7 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
                 )}
               </div>
 
-              <div className="col-span-2 lg:col-span-1">
+              <div className="col-span-2 lg:col-span-2">
                 <Label>Update Course Price</Label>
                 <input
                   id="price"

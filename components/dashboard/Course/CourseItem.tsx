@@ -15,25 +15,27 @@ import React from "react";
 import { useModal } from "@/components/hooks/useModal";
 import Update_Course from "@/components/dashboard/Course/course/course/UpdateCourse";
 import Delete_Course from "@/components/dashboard/Course/course/course/DeleteCourse";
+import { useRouter } from "next/navigation";
 
 
 const CourseItem = ({ courseListing }: { courseListing: CourseList }) => {
   const {image, name, price, id } = courseListing;
   const { isOpen, openModal, closeModal,  isDelete, openDelete, closeDelete  } = useModal();
-
+  const router = useRouter();
   const setSelectedCourse = useCourseStore((s) => s.setSelectedCourse);
    const {addToCart, } = useCourseStore()
 
 
   const handleClick = () => {
     setSelectedCourse(courseListing);
+    router.push(`/overview/course/${courseListing?.id}`)
   };
 
   return (
-    <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer">
+    <div className="w-full border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer">
       <div className="relative">
-        <Link
-          href={`/overview/course/${courseListing?.id}`}
+        <div
+          // href={`/overview/course/${courseListing?.id}`}
           onClick={handleClick}
         >
           <Image
@@ -43,7 +45,7 @@ const CourseItem = ({ courseListing }: { courseListing: CourseList }) => {
             width={500}
             height={160}
           />
-        </Link>
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="absolute top-2 right-2 bg-white p-1 rounded-full shadow hover:bg-gray-300">

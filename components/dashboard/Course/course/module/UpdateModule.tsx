@@ -22,11 +22,18 @@ const Update_Module =({ onClose,  isOpen, course, module })=> {
     onCompleted: (data:any) => {
       data?.updateCourseModule.success === true
       toast.success("Module updated successfully!", {
-        className:
-          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+        style: {
+          background: "#387467",
+          color: "#fff",
+          padding: "0.5rem 1rem",
+          borderRadius: "0.5rem",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          fontWeight: 500,
+          fontSize: "0.875rem",
+        },
+        position: "bottom-right", // 👈 this moves it to bottom-right
         duration: 3000,
-      })
-      console.log(data, "course Module Updated");
+      });
       onClose(); // close modal only after success
     },
   });

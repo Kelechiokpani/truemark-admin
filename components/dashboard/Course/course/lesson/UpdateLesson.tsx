@@ -3,7 +3,7 @@ import Button from "@/components/ui/button/Button";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client/react";
-import { CREATE_COURSE_LESSON, UPDATE_COURSE_LESSON } from "@/lib/Mutation/mutation";
+import { UPDATE_COURSE_LESSON } from "@/lib/Mutation/mutation";
 import { useFormik } from "formik";
 import { toast } from "react-hot-toast";
 import useVideoUploader from "@/lib/useVideoUploder";
@@ -25,10 +25,18 @@ const Update_Lesson =({ onClose, courseListing,  isOpen })=> {
     onCompleted: (data:any) => {
       data?.updateCourseLesson?.success === true
       toast.success("Lesson updated successfully!", {
-        className:
-          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+        style: {
+          background: "#387467",
+          color: "#fff",
+          padding: "0.5rem 1rem",
+          borderRadius: "0.5rem",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          fontWeight: 500,
+          fontSize: "0.875rem",
+        },
+        position: "bottom-right", // 👈 this moves it to bottom-right
         duration: 3000,
-      })
+      });
       onClose(); // close modal only after success
     },
   });

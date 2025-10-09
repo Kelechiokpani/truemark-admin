@@ -22,7 +22,7 @@ import { useParams, useRouter } from "next/navigation";
 
 
   return (
-    <div>
+    <div className="">
 
       <div
         id="accordion-flush"
@@ -107,7 +107,6 @@ import { useParams, useRouter } from "next/navigation";
                   </Modal>
                 </div>
 
-
                 {/*delete module*/}
                 <div>
                   <Modal isOpen={isDelete} onClose={closeDelete} className="max-w-[700px] m-4">
@@ -117,11 +116,6 @@ import { useParams, useRouter } from "next/navigation";
 
               </div>
             )}
-
-
-
-
-
           </div>
 
 

@@ -6,7 +6,7 @@ import { useCourseStore } from "@/store/useCourseStore";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@apollo/client/react";
 import { GET_ASSESSMENT } from "@/lib/Query/queries";
-import Question_Accordion from "@/components/dashboard/Exam-setup/Exams/Exam-Questions/Question-Accordion";
+import Submission_Accordion from "@/components/dashboard/Exam-setup/Exams/Exam-Submission/Submission-Accordion";
 
 
 
@@ -17,7 +17,7 @@ const empty_details = {
 }
 
 
-export default function HistoryDetails() {
+export default function SubmissionDetails() {
 
   const course = useCourseStore((s) => s.selectedCourse);
   const params = useParams();
@@ -53,7 +53,7 @@ export default function HistoryDetails() {
            description={empty_details.description}
          />
        ) : (
-         <Question_Accordion course={course} modules={data?.getAssignment} />
+         <Submission_Accordion course={course} modules={data?.getAssignment} />
        )}
      </div>
 

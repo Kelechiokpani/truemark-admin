@@ -1,20 +1,19 @@
+'use client'
 import Button from "@/components/ui/button/Button";
-import React, { useState } from "react";
+import React  from "react";
 import { useMutation } from "@apollo/client/react";
-import { DELETE_COURSE_MODULE, UPDATE_COURSE_MODULE } from "@/lib/Mutation/mutation";
+import { DELETE_COURSE } from "@/lib/Mutation/mutation";
 import { useFormik } from "formik";
 import { toast } from "react-hot-toast";
-import { GET_COURSES_MODULES } from "@/lib/Query/queries";
+import { GET_COURSES } from "@/lib/Query/queries";
 
 
-
-const Delete_Module =({ onClose,  isOpen, course, module })=> {
-
-  const [DeleteCourseModule, { loading, error }] = useMutation(DELETE_COURSE_MODULE, {
-    awaitRefetchQueries: true, refetchQueries:[GET_COURSES_MODULES], variables:{courseId:module?.id},
+const Delete_Quiz_Question =({ onClose, isOpen, courseListing })=> {
+  const [DeleteCourse, { loading, error }] = useMutation(DELETE_COURSE, {
+    awaitRefetchQueries: true, refetchQueries:[GET_COURSES],
     onCompleted: (data:any) => {
-      data?.deleteCourseModule.success === true
-      toast.success("Module deleted successfully!", {
+      data?.deleteCourse.success === true
+      toast.success("Lesson deleted successfully!", {
         style: {
           background: "#387467",
           color: "#fff",
@@ -27,20 +26,18 @@ const Delete_Module =({ onClose,  isOpen, course, module })=> {
         position: "bottom-right", // 👈 this moves it to bottom-right
         duration: 3000,
       });
-      onClose(); // close modal only after success
+
     },
   });
 
   const formik = useFormik({
     initialValues: {
-      deleteCourseModuleId: module?.id,
+      deleteCourseId:courseListing?.id,
     },
     onSubmit: async (values) => {
       try {
-        await DeleteCourseModule({
-          variables: {
-              deleteCourseModuleId: module.id,
-          },
+        await DeleteCourse({
+          variables: { deleteCourseId:courseListing?.id},
         });
       } catch (err) {
         console.error("Course creation failed:", err);
@@ -53,23 +50,21 @@ const Delete_Module =({ onClose,  isOpen, course, module })=> {
       className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
       <div className="px-2 pr-14">
         <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-          Delete Course Module
+          Delete Course
         </h4>
-        <p className="mb-6 text-md text-gray-500 dark:text-gray-400 lg:mb-7 capitalize">
-          Are you sure you want to delete this course Module. ?
+        <p className="mb-6 text-md text-gray-500 dark:text-gray-400 lg:mb-7 font-bold">
+          Are you sure you want to delete this course. ?
         </p>
       </div>
       <div className="flex flex-col">
-
         <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
           <Button size="sm" variant="outline" onClick={onClose}>
             Close
           </Button>
 
           <button
-            type='submit'
             onClick={() => formik.handleSubmit()} disabled={loading}
-            className="inline-flex items-center justify-center rounded-xl  text-white font-semibold   shadow-md px-8  rounded-md bg-red-600 text-white py-3  disabled:opacity-60"
+            className="inline-flex items-center justify-center rounded-xl   text-white font-semibold   shadow-md px-8  rounded-md bg-red-600 text-white py-3  disabled:opacity-60"
           >
             {loading ? (
               <>
@@ -96,7 +91,7 @@ const Delete_Module =({ onClose,  isOpen, course, module })=> {
                 </svg>
                 please wait...
               </>
-            ) : "Delete Module"}
+            ) : "Delete Course"}
           </button>
         </div>
         {error?.message && (
@@ -111,4 +106,4 @@ const Delete_Module =({ onClose,  isOpen, course, module })=> {
 }
 
 
-export default Delete_Module
+export default Delete_Quiz_Question

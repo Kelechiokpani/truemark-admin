@@ -41,7 +41,7 @@ export default function CourseListing() {
   }, [searchTerm, data]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white w-full px-6">
       {/* Header */}
       <header className="bg-[#387467] text-white px-6 py-8  rounded-md  flex justify-between">
         <h1 className="text-3xl font-bold">Certification Courses</h1>
@@ -53,7 +53,7 @@ export default function CourseListing() {
         </button>
       </header>
 
-      <div className="px-6 py-8 max-w-7xl mx-auto">
+      <div className=" py-8 max-w-7xl mx-auto">
         {/* Filters & Search */}
         <div className="flex flex-col md:flex-row justify-end items-center mb-6 gap-4">
 
@@ -72,22 +72,24 @@ export default function CourseListing() {
           </div>
         </div>
 
-        {loading ? (
-          <div className="flex items-center justify-center min-h-[300px] w-full">
-            <CenteredLoader/>
-          </div>
-        ) : filteredCourses.length === 0 ? (
-          <EmptyContainer
-            title={empty_details.title}
-            description={empty_details.description}
-          />
-        ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredCourses.map((post, key) => (
-              <CourseItem key={key} courseListing={post} />
-            ))}
-          </div>
-        )}
+       <div className="w-full">
+         {loading ? (
+           <div className="flex items-center justify-center min-h-[300px] w-full">
+             <CenteredLoader/>
+           </div>
+         ) : filteredCourses.length === 0 ? (
+           <EmptyContainer
+             title={empty_details.title}
+             description={empty_details.description}
+           />
+         ) : (
+           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+             {filteredCourses.map((post, key) => (
+               <CourseItem key={key} courseListing={post} />
+             ))}
+           </div>
+         )}
+       </div>
 
       </div>
       <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">

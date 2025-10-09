@@ -32,17 +32,25 @@ export default function ExamSetup() {
   const params = useParams();
   const router = useRouter();
 
+
   const [CreateAssignment, { loading, error }] = useMutation(CREATE_EXAM_ASSIGNMENT, {
     awaitRefetchQueries: true, refetchQueries: [GET_COURSES],
     onCompleted: (data: any) => {
-      console.log(data, "exam created");
       if(data?.createAssignment){
         toast.success("Assessment Created successfully!", {
-          className:
-            "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+          style: {
+            background: "#387467",
+            color: "#fff",
+            padding: "0.5rem 1rem",
+            borderRadius: "0.5rem",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+            fontWeight: 500,
+            fontSize: "0.875rem",
+          },
+          position: "bottom-right", // 👈 this moves it to bottom-right
           duration: 3000,
-        })
-      formik.resetForm()
+        });
+         formik.resetForm()
       }
     },
   });
@@ -147,7 +155,7 @@ export default function ExamSetup() {
               name="title"
               value={formik.values.title}
               onChange={formik.handleChange}
-              className="border px-3 py-2 rounded w-[32rem]"
+              className="border px-3 py-2 rounded w-full"
             />
             {formik.touched.title && formik.errors.title && (
               <p className="text-red-500 text-sm mt-2">{formik.errors.title}</p>
@@ -163,7 +171,7 @@ export default function ExamSetup() {
               name="description"
               value={formik.values.description}
               onChange={formik.handleChange}
-              className="w-[32rem] border px-3 py-2 rounded"
+              className="w-full border px-3 py-2 rounded"
             />
             {formik.touched.description && formik.errors.description && (
               <p className="text-red-500 text-sm mt-2">{formik.errors.description}</p>

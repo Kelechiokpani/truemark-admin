@@ -8,6 +8,15 @@ schema {
 "Indicates exactly one field must be supplied and this field must not be `null`."
 directive @oneOf on INPUT_OBJECT
 
+type AdminStats {
+    totalAssignments: Int!
+    totalCourses: Int!
+    totalEnquiries: Int!
+    totalPaidCourses: Int!
+    totalPayments: Float!
+    totalUsers: Int!
+}
+
 type Assignment {
     courseId: ID!
     description: String
@@ -111,15 +120,21 @@ type Mutation {
     createCourseLesson(input: CreateLessionInput!): CourseLessionResponse!
     createCourseModule(input: CreateModuleInput!): CourseModuleResponse!
     createEnquiry(input: CreateEnquiryInput!): Enquiry!
+    deleteAssignment(assignmentId: ID!): Boolean!
     deleteCourse(id: ID!): Boolean!
     deleteCourseLesson(id: ID!): Boolean!
     deleteCourseModule(id: ID!): Boolean!
+    deleteQuestion(questionId: ID!): Boolean!
+    deleteQuestionOption(optionId: ID!): Boolean!
     forgetPassword(email: String!): ForgetPasswordResponse!
     login(input: LoginInput!): LoginResponse!
     submitAssignment(input: SubmitAssignmentInput!): AssignmentSubmission!
+    updateAssignment(assignmentId: ID!, input: UpdateAssignmentInput!): Assignment!
     updateCourse(input: UpdateCourse!): CourseResponse!
     updateCourseLesson(input: UpdateLessionInput!): CourseLessionResponse!
     updateCourseModule(input: UpdateModuleInput!): CourseModuleResponse!
+    updateQuestion(input: UpdateQuestionInput!, questionId: ID!): Question!
+    updateQuestionOption(input: UpdateOptionInput!, optionId: ID!): Option!
     verifyForgotPassword(input: VerifyForgotPasswordInput!): ForgetPasswordResponse!
 }
 
@@ -136,10 +151,11 @@ type PaymentResponse {
 }
 
 type Query {
+    getAdminStats: AdminStats!
     getAssignment(assignmentId: ID!): Assignment
+    getAssignmentByCourseId(courseId: ID!): Assignment
     getAssignmentSubmission(submissionId: ID!): AssignmentSubmission
     getAssignmentSubmissionsByAssignmentId(assignmentId: ID!): [AssignmentSubmission]
-    getAssignmentsByCourseId(courseId: ID!): [Assignment]
     getCourseLessions(moduleId: ID!): [CourseLession]!
     getCourseModules(courseId: ID!): [CourseModule]!
     getCourses: [Course]!
@@ -149,6 +165,7 @@ type Query {
     getUserEnrolledCourses: [Course]!
     getUserInfo: User!
     getUserSubmissionsForAssignment(assignmentId: ID!): [AssignmentSubmission]
+    getUserSubmissionsForCourse(courseId: ID!): AssignmentSubmission
     verifyPayment(reference: String!): Boolean!
 }
 
@@ -245,6 +262,11 @@ input SubmitAssignmentInput {
     assignmentId: ID!
 }
 
+input UpdateAssignmentInput {
+    description: String
+    title: String
+}
+
 input UpdateCourse {
     description: String!
     id: ID!
@@ -267,6 +289,15 @@ input UpdateModuleInput {
     id: ID!
     image: String!
     name: String!
+}
+
+input UpdateOptionInput {
+    optionText: String
+}
+
+input UpdateQuestionInput {
+    correctAnswer: String
+    questionText: String
 }
 
 input VerifyForgotPasswordInput {

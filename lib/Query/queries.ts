@@ -100,9 +100,9 @@ export const GET_CUSTOMER_ENQUIRY = gql`
 
 
 // TRUE-MARK USER EXAMS
-export const GET_CUSTOMERS_ASSESSMENT = gql`
-    query GetAssignmentsByCourseId($courseId: ID!) {
-        getAssignmentsByCourseId(courseId: $courseId) {
+export const GET_ASSESSMENTS = gql`
+    query GetAssignmentByCourseId($courseId: ID!) {
+        getAssignmentByCourseId(courseId: $courseId) {
             id
             courseId
             title
@@ -116,10 +116,12 @@ export const GET_CUSTOMERS_ASSESSMENT = gql`
                     questionId
                     optionText
                 }
+                correctAnswer
             }
         }
     }
 `;
+
 
 export const GET_ASSESSMENT = gql`
     query GetAssignment($assignmentId: ID!) {
@@ -144,9 +146,9 @@ export const GET_ASSESSMENT = gql`
 `;
 
 
-// SUBMISSION ---
 
-export const GET_CUSTOMER_SUBMISSION = gql`
+// SUBMISSION ---
+export const GET_USER_SUBMISSION = gql`
     query GetAssignmentSubmissionsByAssignmentId($assignmentId: ID!) {
         getAssignmentSubmissionsByAssignmentId(assignmentId: $assignmentId) {
             id
@@ -164,20 +166,4 @@ export const GET_CUSTOMER_SUBMISSION = gql`
 `;
 
 
-export const GET_SUBMISSION = gql`
-     query GetAssignmentSubmission($submissionId: ID!) {
-        getAssignmentSubmission(submissionId: $submissionId) {
-            id
-            assignmentId
-            userId
-            score
-            answers {
-                id
-                submissionId
-                questionId
-                selectedOptionId
-            }
-        }
-    }
-`;
 

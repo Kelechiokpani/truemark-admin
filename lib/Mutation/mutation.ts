@@ -147,7 +147,6 @@ export const CREATE_USERS = gql`
     }
 `;
 
-
 export const LOGIN_USERS = gql`
     mutation Login($input: LoginInput!) {
         login(input: $input) {
@@ -169,6 +168,15 @@ export const LOGIN_USERS = gql`
 export const FORGOT_USERS_PASSWORD = gql`
     mutation ForgetPassword($email: String!) {
         forgetPassword(email: $email) {
+            success
+            message
+        }
+    }
+`;
+
+export const VERIFY_FORGOT_USERS_PASSWORD = gql`
+    mutation VerifyForgotPassword($input: VerifyForgotPasswordInput!) {
+        verifyForgotPassword(input: $input) {
             success
             message
         }
@@ -199,3 +207,73 @@ export const CREATE_EXAM_ASSIGNMENT = gql`
     }
 `;
 
+
+export const UPDATE_EXAM_ASSIGNMENT = gql`
+    mutation UpdateAssignment($assignmentId: ID!, $input: UpdateAssignmentInput!) {
+        updateAssignment(assignmentId: $assignmentId, input: $input) {
+            id
+            courseId
+            title
+            description
+            questions {
+                id
+                assignmentId
+                questionText
+                options {
+                    id
+                    questionId
+                    optionText
+                }
+                correctAnswer
+            }
+        }
+    }
+`;
+
+
+export const DELETE_EXAM_ASSIGNMENT = gql`
+    mutation DeleteAssignment($assignmentId: ID!) {
+        deleteAssignment(assignmentId: $assignmentId)
+    }
+`;
+
+
+export const UPDATE_EXAM_QUESTIONS = gql`
+    mutation UpdateQuestion($questionId: ID!, $input: UpdateQuestionInput!) {
+        updateQuestion(questionId: $questionId, input: $input) {
+            id
+            assignmentId
+            questionText
+            options {
+                id
+                questionId
+                optionText
+            }
+            correctAnswer
+        }
+    }
+`;
+
+
+export const DELETE_EXAM_QUESTIONS = gql`
+    mutation DeleteQuestion($questionId: ID!) {
+        deleteQuestion(questionId: $questionId)
+    }
+`
+
+
+export const UPDATE_QUESTION_OPTION = gql`
+    mutation DeleteQuestionOption($optionId: ID!) {
+        deleteQuestionOption(optionId: $optionId)
+    }
+`;
+
+export const DELETE_QUESTION_OPTIONS = gql`
+    mutation UpdateQuestionOption($optionId: ID!, $input: UpdateOptionInput!) {
+        updateQuestionOption(optionId: $optionId, input: $input) {
+            id
+            questionId
+            optionText
+        }
+    }
+`;

@@ -43,7 +43,6 @@ export const useUserStore = create<UserStore>()(
           token: token ?? state.token ?? null,
         }));
       },
-
       fetchUsers: async () => {
         set({ loading: true, error: null });
         try {
@@ -76,47 +75,3 @@ export const useUserStore = create<UserStore>()(
     }
   )
 );
-
-// export const useUserStore = create<UserStore>((set) => ({
-//   currentUser: null,
-//   token: typeof window !== "undefined" ? localStorage.getItem("token") : null,
-//   loading: false,
-//   error: null,
-//
-//   setAuth: ( currentUser , token) => {
-//     if (token && typeof window !== "undefined") {
-//       localStorage.setItem("token", token);
-//     }
-//     set((state) => ({
-//       currentUser: currentUser ?? state.currentUser,
-//       token: token ?? state.token ?? null,
-//     }));
-//   },
-//
-//   fetchUsers: async () => {
-//     set({ loading: true, error: null });
-//     try {
-//       const res:any = await client.query<{ getUserInfo: User }>({
-//         query: GET_USERS as any,
-//         fetchPolicy: "network-only",
-//       });
-//       set({ currentUser: {
-//           email: res?.data?.getUserInfo.email,
-//           id: res?.data?.getUserInfo.id,
-//           fullname: res?.data?.getUserInfo.fullname,
-//         },
-//         loading: false });
-//     } catch (err: any) {
-//       set({ error: err.message, loading: false });
-//     }
-//   },
-//
-//   logout: () => {
-//     // if (typeof window !== "undefined") {
-//     //   localStorage.removeItem("token");
-//     // }
-//     set({ currentUser: null, token: null });
-//     localStorage.removeItem("token");
-//   },
-//
-// }));

@@ -15,11 +15,19 @@ const Delete_Lesson =({ onClose, courseListing,  isOpen })=> {
     awaitRefetchQueries: true, refetchQueries:[GET_COURSES_LESSONS], variables:{moduleId:courseListing?.id},
     onCompleted: (data:any) => {
       data?.deleteCourseLesson?.success === true
-      toast.success("Lesson Deleted successfully!", {
-        className:
-          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+      toast.success("Lesson deleted successfully!", {
+        style: {
+          background: "#387467",
+          color: "#fff",
+          padding: "0.5rem 1rem",
+          borderRadius: "0.5rem",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          fontWeight: 500,
+          fontSize: "0.875rem",
+        },
+        position: "bottom-right", // 👈 this moves it to bottom-right
         duration: 3000,
-      })
+      });
       onClose(); // close modal only after success
     },
   });

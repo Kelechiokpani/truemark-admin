@@ -26,26 +26,30 @@ const CourseModules = () => {
   const { isOpen, openModal, closeModal } = useModal();
   const router = useRouter();
 
+  const id = params?.courseId  || course?.id
+
   const { data, loading, error} = useQuery(GET_COURSES_MODULES, {
     fetchPolicy: "cache-and-network",
-    variables:{courseId:params?.courseId},
+    variables:{courseId:id},
     // fetchPolicy: 'network-only',
   }) as any;
 
 
   const handleRoute = () => {
-    router.push(`/overview/course/${course?.id}/exam-setup`)
+    router.push(`/overview/course/${id}/assessment-setup`)
+    // router.push(`/overview/course/${course?.id}/assessment-setup`)
   }
 
 
     return (
-      <div>
+      <div className="p-6">
         <button
           onClick={() => router.back()}
           className="mb-6 inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
         >
           ← Back
         </button>
+
         <header className="bg-[#387467] text-white px-6 py-8 rounded-md  flex justify-between mt-2">
           <h1 className="text-3xl font-bold">Course Modules</h1>
           {/*<h1 className="text-1xl font-bold">{data?.getCourseModules?.name}</h1>*/}
@@ -63,21 +67,20 @@ const CourseModules = () => {
         <div className="py-6 px-6 flex justify-between gap-6">
           <h1 className="text-1xl font-bold">Course Assessment</h1>
 
-          <div className="flex gap-6">
+          <div className="flex gap-6 uppercase">
             <button
               onClick={handleRoute}
-              className="bg-[#387467] flex text-white px-4 py-2 rounded-md text-sm ">
+              className=" lowercase bg-[#387467] flex text-white px-4 py-2 rounded-md text-sm ">
               {/*className="bg-[#387467] flex text-white px-4 py-2 rounded-md font-bold">*/}
-              <Plus size={16} className="mt-0.5 mr-2" />Add Exam
+              <Plus size={16} className="mt-0.5 mr-2" />Add assessment
             </button>
 
-            <Link href={`/overview/course/${course?.id}/exam-list`}>
+            <Link href={`/overview/course/${id}/assessment`}>
               <button
-                className="bg-[#387467] flex text-white text-sm  px-4 py-2 rounded-md ">
-                <Eye size={16} className="mt-0.5 mr-2" /> View Exams
+                className="lowercase bg-[#387467] flex text-white text-sm  px-4 py-2 rounded-md ">
+                <Eye size={16} className="mt-0.5 mr-2" /> View assessment
               </button>
             </Link>
-
 
 
           </div>
@@ -95,6 +98,7 @@ const CourseModules = () => {
         ) : (
           <Accordion course={course} modules={data?.getCourseModules} />
          )}
+
 
         <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
           <Create_Module onClose={closeModal} isOpen={isOpen} course={course} />

@@ -21,12 +21,19 @@ const Create_Module =({ onClose, isOpen, course })=> {
 
     onCompleted: (data:any) => {
       data?.createCourseModule.success === true
-      toast.success("Module created successfully!", {
-        className:
-          "bg-[#387467] text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm sm:text-base w-[calc(100vw-2rem)] sm:w-auto",
+      toast.success("Module updated successfully!", {
+        style: {
+          background: "#387467",
+          color: "#fff",
+          padding: "0.5rem 1rem",
+          borderRadius: "0.5rem",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          fontWeight: 500,
+          fontSize: "0.875rem",
+        },
+        position: "bottom-right", // 👈 this moves it to bottom-right
         duration: 3000,
-      })
-      console.log(data, "course Module Created");
+      });
       onClose(); // close modal only after success
     },
   });

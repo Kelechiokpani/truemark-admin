@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 
 
-const Question_Accordion = ({ course, modules }) => {
+const Submission_Accordion = ({ course, modules }) => {
   const [selectedModuleId, setSelectedModuleId] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
 
@@ -71,4 +71,4 @@ const Question_Accordion = ({ course, modules }) => {
   );
 };
 
-export default Question_Accordion;
+export default Submission_Accordion;

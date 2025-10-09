@@ -1,10 +1,10 @@
 import { useQuery } from "@apollo/client/react";
-import { GET_CUSTOMER_SUBMISSION } from "@/lib/Query/queries";
+import { GET_USER_SUBMISSION } from "@/lib/Query/queries";
 import CenteredLoader from "@/components/utility/Loader";
 import EmptyContainer from "@/components/utility/EmptyContainer";
 import React from "react";
 import { useCourseStore } from "@/store/useCourseStore";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Exam_History_List from "@/components/dashboard/Exam-setup/Exam-Submission/Exam-History-List";
 
 
@@ -14,21 +14,25 @@ const empty_details = {
 }
 
 
-const Exams_History = ()=> {
+const Course_Exams_History = ()=> {
   const course = useCourseStore((s) => s.selectedCourse);
   const params = useParams();
   const router = useRouter();
+  const id = params?.courseId  || course?.id
 
-  const { data, loading, error} = useQuery(GET_CUSTOMER_SUBMISSION, {
-    variables:{assignmentId:params?.id},
+  const searchParams = useSearchParams();
+  const dataId = searchParams.get("dataId");
+
+  const { data, loading, error} = useQuery(GET_USER_SUBMISSION, {
+    variables:{assignmentId:dataId},
     fetchPolicy: "cache-and-network",
     // fetchPolicy: 'network-only',
   }) as any;
 
+  console.log(data, "data......");
 
   return(
     <div>
-
       <button
         onClick={() => router.back()}
         className="mb-6 inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
@@ -36,7 +40,7 @@ const Exams_History = ()=> {
         ← Back
       </button>
       <header className="bg-[#387467] text-white px-6 py-8 rounded-md">
-        <h1 className="text-2xl font-bold">Assessment Submission</h1>
+        <h1 className="text-2xl font-bold">Course Assessment Submission History</h1>
       </header>
 
         <div>
@@ -44,7 +48,7 @@ const Exams_History = ()=> {
             <div className="flex items-center justify-center min-h-[300px] w-full">
               <CenteredLoader />
             </div>
-          ) : data?.getAssignmentSubmissionsByAssignmentId?.length === 0 ? (
+          ) : data?.getAssignmentByCourseId?.length === 0 ? (
           // ) : data?.getAssignmentSubmissionsByAssignmentId?.length === 0 || "undefined" ? (
             <EmptyContainer
               title={empty_details.title}
@@ -61,4 +65,4 @@ const Exams_History = ()=> {
 }
 
 
-export default Exams_History
+export default Course_Exams_History

@@ -39,7 +39,7 @@ function SideBar() {
   return (
     <div
       className={cn(
-        "bg-white w-[300px] duration-150 flex flex-col shadow-lg",
+        "bg-white w-[300px] duration-150 flex flex-col shadow-lg flex-shrink-0",
         isOpen ? null : "w-[100px]"
       )}
     >
@@ -111,45 +111,6 @@ function SideBar() {
           );
         })}
 
-        {/* General Menu */}
-        <p
-          className={cn(
-            "text-normal text-sm font-bold text-dark-gray uppercase px-4 mt-5",
-            isOpen ? null : "px-0 text-center"
-          )}
-        >
-          General
-        </p>
-
-        {mainGeneral.map((menu, index) => {
-          const active = isRouteActive(menu.link);
-          return (
-            <Link
-              key={index}
-              className={cn(
-                "group text-text text-sm font-medium rounded-lg py-3 px-4 flex gap-4 items-center capitalize duration-150",
-                active ? "bg-[#387467] text-white" : "hover:bg-green-50",
-                isOpen ? null : "hover:bg-transparent !bg-transparent"
-              )}
-              href={menu.link}
-              onMouseOver={() => setHoveredGeneral(index)}
-              onMouseOut={() => setHoveredGeneral(null)}
-            >
-              <span
-                className={cn(
-                  "shrink-0 w-8 h-8 rounded-lg border group-hover:bg-[#04BA99] group-hover:border-none duration-150 flex items-center justify-center",
-                  active ? "bg-[#387467] border-none" : null
-                )}
-              >
-                {hoveredGeneral === index || active
-                  ? menu.active_icon
-                  : menu.icon}
-              </span>
-              {isOpen ? <span>{menu.label}</span> : null}
-            </Link>
-          );
-        })}
-
         {/* Logout */}
         <button
           onClick={handleRoute}
@@ -162,12 +123,13 @@ function SideBar() {
         </button>
 
         {/* Footer CTA */}
+        {/*bg-[#04BA99] */}
         {isOpen ? (
-          <div className="mt-auto mx-auto w-[192px] text-white shadow-2xl border rounded-[20px] py-7 px-[23px] my-6 bg-[#04BA99] bg-[url('/assets/images/Ellipse 128.svg'),url('/assets/images/Ellipse 129.svg')] bg-[left_top,right_bottom] bg-[auto,auto] flex flex-col gap-8 items-center">
+          <div className="mt-auto mx-auto w-[192px] text-white shadow-2xl border rounded-[20px] py-7 px-[23px] my-6 bg-green-50  bg-[url('/assets/images/Ellipse 128.svg'),url('/assets/images/Ellipse 129.svg')] bg-[left_top,right_bottom] bg-[auto,auto] flex flex-col gap-8 items-center">
             <SecondaryLogo />
             <ButtonComponent
               label="TMGL"
-              className="bg-white text-primary hover:bg-white w-full"
+              className="bg-white text-gray-800 hover:bg-white w-full"
             />
           </div>
         ) : (
