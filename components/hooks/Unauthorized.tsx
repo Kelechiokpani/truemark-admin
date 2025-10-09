@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-export default function NotFound() {
+export default function Unauthorized() {
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-green-50 via-white to-green-100 p-6">
       {/* Illustration */}
@@ -30,18 +30,19 @@ export default function NotFound() {
             fill="white"
             fontWeight="bold"
           >
-            404
+            403
           </text>
         </svg>
       </div>
 
       {/* Text */}
       <h1 className="text-3xl font-bold text-gray-800 mb-4">
-        Oops! Page not found
+        Unauthorized Access
       </h1>
       <p className="text-sm text-gray-600 max-w-lg text-center mb-8">
-        Sorry, we can’t seem to find the page you’re looking for.
-        It might have been removed, renamed, or simply never existed.
+        You don’t have permission to view this page. Please make sure you’re
+        logged in with the right account or contact an administrator if you
+        believe this is a mistake.
       </p>
 
       {/* Buttons */}
@@ -55,6 +56,5 @@ export default function NotFound() {
 
       </div>
     </div>
-
   );
 }

@@ -98,7 +98,7 @@ const Exam_History_List  =  ({data}) => {
 
         <div className="flex justify-between items-center mt-6">
           <div className="text-sm text-gray-500">
-            Showing {startIndex + 1}-{Math.min(startIndex + ITEMS_PER_PAGE, totalItems)} of {totalItems} contacts
+            Showing {startIndex + 1}-{Math.min(startIndex + ITEMS_PER_PAGE, totalItems)} of {totalItems} Assessment
             {debouncedSearchTerm && ` matching "${debouncedSearchTerm}"`}
           </div>
 

@@ -60,21 +60,7 @@ export default function QuestionList({data}) {
       </div>
 
       <div className="flex-1  bg-white shadow rounded-lg p-8 mt-8 shadow-md border">
-
         <Question_Accordion course={course} modules={data} />
-
-        {/*{loading ? (*/}
-        {/*  <div className="flex items-center justify-center min-h-[300px] w-full">*/}
-        {/*    <CenteredLoader />*/}
-        {/*  </div>*/}
-        {/*) : data?.getAssignment?.length === 0 ? (*/}
-        {/*  <EmptyContainer*/}
-        {/*    title={empty_details.title}*/}
-        {/*    description={empty_details.description}*/}
-        {/*  />*/}
-        {/*) : (*/}
-        {/*  <Question_Accordion course={course} modules={data?.getAssignment} />*/}
-        {/*)}*/}
       </div>
 
 

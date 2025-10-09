@@ -58,8 +58,6 @@ const Course_Exams_History = ()=> {
             <Exam_History_List data={data?.getAssignmentSubmissionsByAssignmentId} />
           )}
         </div>
-
-
     </div>
 )
 }
