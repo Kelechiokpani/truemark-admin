@@ -90,9 +90,6 @@ const ResetPassword = () => {
     }
   };
 
-
-
-
   return (
     <>
       <div
