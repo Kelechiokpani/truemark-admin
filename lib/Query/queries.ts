@@ -165,5 +165,17 @@ export const GET_USER_SUBMISSION = gql`
     }
 `;
 
+export const GET_ANALYTICS = gql`
+    query GetAdminStats {
+        getAdminStats {
+            totalUsers
+            totalCourses
+            totalAssignments
+            totalEnquiries
+            totalPayments
+            totalPaidCourses
+        }
+    }
 
+`
 

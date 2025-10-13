@@ -34,7 +34,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
       <ApolloProvider client={client}>
         <SidebarProvider>{children}</SidebarProvider>
       </ApolloProvider>
-      </body>
+      </body>r
     </html>
   );
 }

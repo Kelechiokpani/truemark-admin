@@ -104,7 +104,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <SideBar />
 
       {/* Main content area */}
-      <div className="flex-grow flex flex-col h-screen overflow-hidden">
+      <div className="flex-grow flex flex-col overflow-hidden">
         {/* Sticky header at the top */}
         <div className="shrink-0">
           <Header data={data} />

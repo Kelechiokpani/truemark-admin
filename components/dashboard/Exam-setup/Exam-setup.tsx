@@ -8,6 +8,7 @@ import { GET_COURSES } from "@/lib/Query/queries";
 import { toast } from "react-hot-toast";
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
+import { useCourseStore } from "@/store/useCourseStore";
 
 // ✅ Validation schema
 const validationSchema = Yup.object().shape({
@@ -31,7 +32,8 @@ const validationSchema = Yup.object().shape({
 export default function ExamSetup() {
   const params = useParams();
   const router = useRouter();
-
+  const course = useCourseStore((s) => s.selectedCourse);
+  const id = params?.courseId  || course?.id
 
   const [CreateAssignment, { loading, error }] = useMutation(CREATE_EXAM_ASSIGNMENT, {
     awaitRefetchQueries: true, refetchQueries: [GET_COURSES],
@@ -75,7 +77,7 @@ export default function ExamSetup() {
         await CreateAssignment({
           variables: {
             input: {
-              courseId: params?.courseId,
+              courseId: id,
               description: values.description,
               title: values.title,
               questions: values.questions.map((q:any) => ({

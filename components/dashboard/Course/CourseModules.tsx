@@ -35,11 +35,12 @@ const CourseModules = () => {
   }) as any;
 
 
-  const handleRoute = () => {
-    router.push(`/overview/course/${id}/assessment-setup`)
-    // router.push(`/overview/course/${course?.id}/assessment-setup`)
-  }
+  ///overview/course/course-details
 
+  const handleRoute = () => {
+    router.push(`/overview/course/course-details/assessment-setup`)
+    // router.push(`/overview/course/${id}/assessment-setup`)
+   }
 
     return (
       <div className="p-6">
@@ -75,7 +76,8 @@ const CourseModules = () => {
               <Plus size={16} className="mt-0.5 mr-2" />Add assessment
             </button>
 
-            <Link href={`/overview/course/${id}/assessment`}>
+            <Link href={`/overview/course/course-details/assessment`}>
+            {/*<Link href={`/overview/course/${id}/assessment`}>*/}
               <button
                 className="lowercase bg-[#387467] flex text-white text-sm  px-4 py-2 rounded-md ">
                 <Eye size={16} className="mt-0.5 mr-2" /> View assessment

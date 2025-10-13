@@ -34,9 +34,12 @@ const CourseItem = ({ courseListing }: { courseListing: CourseList }) => {
   return (
     <div className="w-full border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer">
       <div className="relative">
-        <div
-          // href={`/overview/course/${courseListing?.id}`}
-          onClick={handleClick}
+        <Link
+          onClick={()=> {setSelectedCourse(courseListing)}}
+          href={{
+            pathname: `/overview/course/course-details`,
+          }}
+          // onClick={handleClick}
         >
           <Image
             src={image}
@@ -45,7 +48,7 @@ const CourseItem = ({ courseListing }: { courseListing: CourseList }) => {
             width={500}
             height={160}
           />
-        </div>
+        </Link>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="absolute top-2 right-2 bg-white p-1 rounded-full shadow hover:bg-gray-300">
