@@ -73,6 +73,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     skip: !token, // 🚀 prevents firing query if no token
   }) as any;
 
+
   // While loading — show a smooth loader instead of flicker
   if (loading) {
     return (
@@ -86,6 +87,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     );
   }
+
 
   // If query errored or user not found
   if (error || !data?.getUserInfo) {
