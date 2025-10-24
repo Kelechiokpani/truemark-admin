@@ -6,7 +6,7 @@ import { useCourseStore } from "@/store/useCourseStore";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@apollo/client/react";
 import { GET_ASSESSMENT } from "@/lib/Query/queries";
-import Submission_Accordion from "@/components/dashboard/Exam-setup/Exams/Exam-Submission/Submission-Accordion";
+import Submission_Accordion from "@/components/dashboard/Exam-setup/Exams/Exam-Submission-History/Submission-Accordion";
 
 
 

@@ -17,7 +17,6 @@ const Exams_Assessment = ()=> {
   const course = useCourseStore((s) => s.selectedCourse);
   const params = useParams();
   const router = useRouter();
-
   const id = params?.courseId  || course?.id
 
   const { data, loading, error} = useQuery(GET_ASSESSMENTS, {
@@ -42,7 +41,6 @@ const Exams_Assessment = ()=> {
             />
           ) : (
             <QuestionList data={data?.getAssignmentByCourseId} />
-            // <Exam_AssessmentList data={data?.GetAssignmentByCourseId} />
           )}
         </div>
 

@@ -4,17 +4,14 @@ import React, {useEffect, useMemo, useState} from "react";
 import { SearchInput } from "@/components/utility/SearchInput";
 import { useDebouncedValue } from "@/components/utility/useDebouncedSearch";
 import { Pagination } from "@/components/utility/Pagination";
-import { Modal } from "@/components/ui/modal";
 import { useModal } from "@/components/hooks/useModal";
 import BaseTable from "@/components/utility/Base-Table";
-import DetailsCard from "@/components/dashboard/customer_Enquiry/details";
 import { useCourseStore } from "@/store/useCourseStore";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowRight } from "lucide-react";
 
 
 
-const Assessment_History_List  =  ({data}) => {
+const Transaction_List  =  ({data}) => {
   const course = useCourseStore((s) => s.selectedCourse);
   const params = useParams();
   const router = useRouter();
@@ -28,10 +25,11 @@ const Assessment_History_List  =  ({data}) => {
   const debouncedSearchTerm = useDebouncedValue(searchTerm, 300);
 
 
+
   const filteredData = useMemo(() => {
     if (!debouncedSearchTerm.trim()) return data;
     return data.filter((contact:any) =>
-      contact?.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      contact?.user?.fullname.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
     );
   }, [data, debouncedSearchTerm]);
 
@@ -57,49 +55,34 @@ const Assessment_History_List  =  ({data}) => {
       render: () => <span>{ListIcons.dashboard}</span>,
     },
     {
-      header: "Course Id",
-      accessor: "courseId",
+      header: "Assignment Id",
+      accessor: "assignmentId",
       render: (row: any) => (
-        <span title={row.courseId}>
-          {row.courseId ? row.courseId.slice(0, 10) : ""}...
+        <span title={row.assignmentId}>
+          {row.assignmentId ? row.assignmentId.slice(0, 10) : ""}...
         </span>
       ),
     },
-    { header: "Assessment title", accessor: "title" },
     {
-      header: "View Question",
-      accessor: "action",
+      header: "Name",
+      accessor: "name",
       render: (row: any) => (
-        <button
-          onClick={() => {
-            router.push(`/overview/course/${course?.id}/exam-list/${row?.id}`)
-            // setSelectedRow(row);
-            // openModal();
-          }}
-          className="text-[#387412] lowercase hover:underline flex gap-2"
-        >
-          Assessment
-          <ArrowRight size={15} className="font-bold mt-1" />
-        </button>
+        <span className="lowercase hover:underline">
+          {row.user.fullname}
+        </span>
       ),
     },
     {
-      header: "View Submission",
-      accessor: "action",
+      header: "User Email",
+      accessor: "email",
       render: (row: any) => (
-        <button
-          onClick={() => {
-            router.push(`/overview/course/${course?.id}/exam-list/${row?.id}/exam-submission`)
-            // setSelectedRow(row);
-            // openModal();
-          }}
-          className="text-[#387467] flex gap-2  lowercase hover:underline"
-        >
-          Submission
-          <ArrowRight size={15} className="font-bold mt-1" />
-        </button>
+        <span className="lowercase hover:underline">
+          {row.user.email}
+        </span>
       ),
     },
+    { header: "Assessment score", accessor: "score" },
+
   ];
 
 
@@ -119,7 +102,7 @@ const Assessment_History_List  =  ({data}) => {
 
         <div className="flex justify-between items-center mt-6">
           <div className="text-sm text-gray-500">
-            Showing {startIndex + 1}-{Math.min(startIndex + ITEMS_PER_PAGE, totalItems)} of {totalItems} contacts
+            Showing {startIndex + 1}-{Math.min(startIndex + ITEMS_PER_PAGE, totalItems)} of {totalItems} Assessment
             {debouncedSearchTerm && ` matching "${debouncedSearchTerm}"`}
           </div>
 
@@ -133,15 +116,13 @@ const Assessment_History_List  =  ({data}) => {
 
       <div>
 
-        <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[600px]">
-          <DetailsCard selected={selectedRow}/>
-        </Modal>
+        {/*<Modal isOpen={isOpen} onClose={closeModal} className="max-w-[600px]">*/}
+        {/*  <DetailsCard selected={selectedRow}/>*/}
+        {/*</Modal>*/}
 
       </div>
-
     </div>
-
   )
 }
 
-export default Assessment_History_List
+export default Transaction_List

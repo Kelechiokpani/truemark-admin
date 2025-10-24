@@ -24,11 +24,9 @@ export default function QuestionList({data}) {
           ← Back
         </button>
 
-        {/*<Link href={`/overview/course/${id}/assessment/assessment-history`}>*/}
-
         <Link
             href={{
-              pathname: `/overview/course/${id}/assessment/assessment-history`,
+              pathname:`/overview/course/${id}/assessment/assessment-history`,
               query: { dataId: data?.id },
             }}
           >
