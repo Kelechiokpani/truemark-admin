@@ -20,6 +20,8 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
+import CenteredLoader from "@/components/utility/Loader";
+
 
 type StatCard = {
   title: string;
@@ -36,10 +38,13 @@ export default function AnalyticsOverview() {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center h-screen text-gray-500 dark:text-gray-400">
-        <Loader2 className="animate-spin size-5 mr-2" /> Loading analytics...
+      <div className="flex justify-center items-center h-screen text-gray-500 dark:text-gray-400 w-full">
+        {/*<Loader2 className="animate-spin size-5 mr-2" />*/}
+        <CenteredLoader />  Loading analytics...
       </div>
-    );
+
+)
+  ;
 
   if (error)
     return (

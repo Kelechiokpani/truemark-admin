@@ -25,12 +25,6 @@ const CourseItem = ({ courseListing }: { courseListing: CourseList }) => {
   const setSelectedCourse = useCourseStore((s) => s.setSelectedCourse);
    const {addToCart, } = useCourseStore()
 
-
-  const handleClick = () => {
-    setSelectedCourse(courseListing);
-    router.push(`/overview/course/${courseListing?.id}`)
-  };
-
   return (
     <div className="w-full border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer">
       <div className="relative">
@@ -51,7 +45,7 @@ const CourseItem = ({ courseListing }: { courseListing: CourseList }) => {
         </Link>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="absolute top-2 right-2 bg-white p-1 rounded-full shadow hover:bg-gray-300">
+            <button className="absolute top-2 right-2 bg-[#387467] p-1 rounded-full shadow hover:bg-gray-300 text-white">
               <MoreVertical size={18} />
             </button>
           </DropdownMenuTrigger>
@@ -83,16 +77,6 @@ const CourseItem = ({ courseListing }: { courseListing: CourseList }) => {
         }).format(Number(price ?? 0))}
       </p>
 
-
-      {/* <div className="flex flex-col gap-4 py-2 px-4">*/}
-      {/*  <button*/}
-      {/*    onClick={() => addToCart(courseListing)}*/}
-      {/*    className="bg-[#387467] text-white px-4 py-2 rounded-2xl hover:bg-gray-300"*/}
-      {/*  >*/}
-      {/*    Add to Cart*/}
-      {/*     /!*{isPaid ? "Already Enrolled" : "Add to Cart"}*!/*/}
-      {/*  </button>*/}
-      {/*</div>*/}
 
       <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
         <Update_Course onClose={closeModal} isOpen={isOpen} courseListing={courseListing} />

@@ -49,10 +49,10 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
 
   const { upload, uploadPercentage, loading: uploadLoading } = useUploader({
     onCompleted: (res) => {
-      setFileUrl(res?.secure_url)
-      formik.setFieldValue("image", res?.secure_url); // ✅ bind to formik
+      setFileUrl(res?.data?.url)
+      formik.setFieldValue("image", res?.data?.url); // ✅ bind to formik
       toast.success("Image uploaded successfully!");
-      console.log("Uploaded to Cloudinary:", res)
+      console.log("Uploaded to Cloudinary:",  res?.data?.url)
     },
   });
 
@@ -96,7 +96,7 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
         </p>
       </div>
       <div className="flex flex-col">
-        <div className="custom-scrollbar h-[350px] overflow-y-auto px-2 pb-3">
+        <div className="custom-scrollbar h-[430px] overflow-y-auto px-2 pb-3">
           <div className="mt-7">
 
             <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
@@ -109,7 +109,7 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
                   placeholder="Enter course name"
                   value={formik.values.name}
                   onChange={formik.handleChange}
-                  className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-[#fff9d9] focus:outline-none focus:ring-2 focus:ring-[#387467]"
+                  className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
                 />
                 {formik.errors.name && formik.touched.name && (
                   <span className="text-red-500 text-xs">{formik.errors.name}</span>
@@ -137,7 +137,7 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
                     const rawValue = e.target.value.replace(/\D/g, "");
                     formik.setFieldValue("price", rawValue);
                   }}
-                  className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-[#fff9d9] focus:outline-none focus:ring-2 focus:ring-[#387467]"
+                  className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
                 />
                 {formik.errors.price && formik.touched.price && (
                   <span className="text-red-500 text-xs">{formik.errors.price}</span>
@@ -151,12 +151,13 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
                        placeholder="Insert image"
                        type="file"
                        accept="image/*"
-                       className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-[#fff9d9] focus:outline-none focus:ring-2 focus:ring-[#387467]"
+                       className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
                        onChange={async (event) => {
                          const file = event.currentTarget.files?.[0];
                          if (file) {
                            try {
-                             await upload(file, "truemark", "dee0xvh2c");
+                             // await upload(file, "truemark", "dee0xvh2c");
+                             await upload(file);
                            } catch (err) {
                              toast.error("Image upload failed!");
                              console.error("Image upload error:", err);
@@ -177,7 +178,7 @@ const Update_Course =({ onClose, isOpen, courseListing })=> {
                           placeholder="Enter course description"
                           value={formik.values.description}
                           onChange={formik.handleChange}
-                          className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-[#fff9d9] focus:outline-none focus:ring-2 focus:ring-[#387467]"
+                          className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
                 />
                 {formik.errors.description && formik.touched.description && (
                   <span className="text-red-500 text-xs">{formik.errors.description}</span>

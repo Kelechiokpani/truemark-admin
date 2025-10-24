@@ -67,7 +67,7 @@ import { useParams, useRouter } from "next/navigation";
                   <div>
                     <button
                       onClick={openModal}
-                      className="bg-[#387467] flex text-white px-4 py-2 rounded-md">
+                      className="bg-[#387467] flex text-white text-sm px-4 py-2 rounded-md">
                       <Plus size={16} className="mt-1 mr-2" /> Add video Lesson
                     </button>
                   </div>
@@ -89,7 +89,7 @@ import { useParams, useRouter } from "next/navigation";
 
                 <CourseVideoListing id={id} module={module} />
                 <div className="flex justify-start border border-green-900 py-8 px-3">
-                  <span className="py-3 sentence">{module?.description}</span>
+                  <span className="py-2 sentence text-sm">{module?.description}</span>
                 </div>
 
 

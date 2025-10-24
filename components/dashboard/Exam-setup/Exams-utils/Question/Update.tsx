@@ -1,29 +1,225 @@
-'use client'
-import Label from "@/components/ui/form/Label";
-import Button from "@/components/ui/button/Button";
-import React from "react";
-import * as Yup from "yup";
-import { useMutation } from "@apollo/client/react";
-import { UPDATE_ASSESSMENT } from "@/lib/Mutation/mutation";
+"use client";
 import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Plus, Trash2 } from "lucide-react";
+import { useMutation } from "@apollo/client/react";
+import {
+  UPDATE_QUESTIONS,
+  DELETE_QUESTIONS,
+  UPDATE_QUESTION_OPTION,
+  DELETE_QUESTION_OPTIONS,
+} from "@/lib/Mutation/mutation";
+import { GET_COURSES } from "@/lib/Query/queries";
 import { toast } from "react-hot-toast";
-import { GET_ASSESSMENTS } from "@/lib/Query/queries";
-import { useCourseStore } from "@/store/useCourseStore";
+import React from "react";
 
-
-const validationSchema = Yup.object({
-  title: Yup.string().required("Assessment title is required"),
-  description: Yup.string().required("Assessment description is required"),
+// ✅ Validation schema
+const validationSchema = Yup.object().shape({
+  questionText: Yup.string().required("Question text is required"),
+  correctAnswer: Yup.string().required("Correct answer is required"),
+  options: Yup.array()
+    .of(Yup.string().required("Option cannot be empty"))
+    .min(2, "At least 2 options required"),
 });
 
+export default function UpdateSingleQuestion({ question }) {
+  // ✅ GraphQL Mutations
+  const [UpdateQuestion] = useMutation(UPDATE_QUESTIONS, {
+    refetchQueries: [GET_COURSES],
+  });
+  const [DeleteQuestion] = useMutation(DELETE_QUESTIONS, {
+    refetchQueries: [GET_COURSES],
+  });
+  const [UpdateOption] = useMutation(UPDATE_QUESTION_OPTION, {
+    refetchQueries: [GET_COURSES],
+  });
+  const [DeleteOption] = useMutation(DELETE_QUESTION_OPTIONS, {
+    refetchQueries: [GET_COURSES],
+  });
 
-const Update_Assessment =  ({ onClose, isOpen, Assessment }) => {
-  const course = useCourseStore((s) => s.selectedCourse);
-  const [UpdateAssignment, { loading, error }] = useMutation(UPDATE_ASSESSMENT, {
-    awaitRefetchQueries: true, refetchQueries: [GET_ASSESSMENTS], variables:{courseId:course?.id},
-    onCompleted: (data: any) => {
-      data?.createCourse.success === true
-      toast.success("Assessment updated successfully!", {
+  console.log(question, "question");
+
+  // ✅ Formik setup
+  const formik = useFormik({
+    initialValues: {
+      questionText: question?.questionText || "",
+      correctAnswer: question?.correctAnswer || "",
+      options: question?.options?.map((opt) => opt.optionText) || [],
+      optionIds: question?.options?.map((opt) => opt.id) || [],
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      try {
+        await UpdateQuestion({
+          variables: {
+            questionId: question.id,
+            input: {
+              questionText: values.questionText,
+              correctAnswer: values.correctAnswer,
+            },
+          },
+        });
+        toast.success("Question updated successfully!", {
+          style: {
+            background: "#387467",
+            color: "#fff",
+            padding: "0.5rem 1rem",
+            borderRadius: "0.5rem",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+            fontWeight: 500,
+            fontSize: "0.875rem",
+          },
+          position: "bottom-right", // 👈 this moves it to bottom-right
+          duration: 3000,
+        });
+      } catch (error) {
+        toast.error("Failed to update question");
+      }
+    },
+  });
+
+  // 🔹 Add option (local only)
+  const addOption = () => {
+    formik.setFieldValue("options", [...formik.values.options, ""]);
+    formik.setFieldValue("optionIds", [...formik.values.optionIds, ""]);
+  };
+
+  // // 🔹 Update single option
+  // const handleUpdateOption = async (index, text) => {
+  //   const optionId = formik.values.optionIds[index];
+  //   if (!optionId) return;
+  //
+  //   try {
+  //     await UpdateOption({
+  //       variables: { optionId, input: { optionText: text } },
+  //     });
+  //     toast.success("Question Option updated successfully!", {
+  //       style: {
+  //         background: "#387467",
+  //         color: "#fff",
+  //         padding: "0.5rem 1rem",
+  //         borderRadius: "0.5rem",
+  //         boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+  //         fontWeight: 500,
+  //         fontSize: "0.875rem",
+  //       },
+  //       position: "bottom-right", // 👈 this moves it to bottom-right
+  //       duration: 3000,
+  //     });
+  //   } catch {
+  //     toast.error("Failed to update option");
+  //   }
+  // };
+  //
+  // // 🔹 Delete single option
+  // const handleDeleteOption = async (index) => {
+  //   const optionId = formik.values.optionIds[index];
+  //
+  //   const newOptions = [...formik.values.options];
+  //   const newOptionIds = [...formik.values.optionIds];
+  //   newOptions.splice(index, 1);
+  //   newOptionIds.splice(index, 1);
+  //   formik.setFieldValue("options", newOptions);
+  //   formik.setFieldValue("optionIds", newOptionIds);
+  //
+  //   if (optionId) {
+  //     try {
+  //       await DeleteOption({ variables: { optionId } });
+  //       toast.success("Question Option deleted successfully!", {
+  //         style: {
+  //           background: "#387467",
+  //           color: "#fff",
+  //           padding: "0.5rem 1rem",
+  //           borderRadius: "0.5rem",
+  //           boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+  //           fontWeight: 500,
+  //           fontSize: "0.875rem",
+  //         },
+  //         position: "bottom-right", // 👈 this moves it to bottom-right
+  //         duration: 3000,
+  //       });
+  //     } catch {
+  //       toast.error("Failed to delete option");
+  //     }
+  //   }
+  // };
+  //
+  //
+
+  // 🔹 Update single option (server + local)
+  const handleUpdateOption = async (index, text) => {
+    const optionId = formik.values.optionIds[index];
+
+    await formik.setFieldValue(
+      "options",
+      formik.values.options.map((opt, i) => (i === index ? text : opt))
+    );
+    // if optionId exists, update on backend
+    if (optionId) {
+      try {
+        await UpdateOption({
+          variables: {
+            optionId:optionId,
+            input: { optionText: text },
+          },
+        });
+        toast.success("Option updated successfully!", {
+          style: {
+            background: "#387467",
+            color: "#fff",
+            padding: "0.5rem 1rem",
+            borderRadius: "0.5rem",
+            fontWeight: 500,
+            fontSize: "0.875rem",
+          },
+          position: "bottom-right",
+          duration: 3000,
+        });
+      } catch (error) {
+        toast.error("Failed to update option");
+      }
+    }
+  };
+
+  // 🔹 Delete option (both local + backend if saved)
+  const handleDeleteOption = async (index) => {
+    const optionId = formik.values.optionIds[index];
+
+    // remove from local formik state
+    const newOptions = formik.values.options.filter((_, i) => i !== index);
+    const newOptionIds = formik.values.optionIds.filter((_, i) => i !== index);
+
+    formik.setFieldValue("options", newOptions);
+    formik.setFieldValue("optionIds", newOptionIds);
+
+    // if it exists on backend, delete it
+    if (optionId) {
+      try {
+        await DeleteOption({ variables: { optionId } });
+        toast.success("Option deleted successfully", {
+          style: {
+            background: "#387467",
+            color: "#fff",
+            padding: "0.5rem 1rem",
+            borderRadius: "0.5rem",
+            fontWeight: 500,
+            fontSize: "0.875rem",
+          },
+          position: "bottom-right",
+          duration: 3000,
+        });
+      } catch (error) {
+        toast.error("Failed to delete option");
+      }
+    }
+  };
+
+
+  // 🔹 Delete entire question
+  const handleDeleteQuestion = async () => {
+    try {
+      await DeleteQuestion({ variables: { questionId: question.id } });
+      toast.success("Question deleted successfully!", {
         style: {
           background: "#387467",
           color: "#fff",
@@ -36,135 +232,115 @@ const Update_Assessment =  ({ onClose, isOpen, Assessment }) => {
         position: "bottom-right", // 👈 this moves it to bottom-right
         duration: 3000,
       });
-      onClose();
-    },
-  });
 
-  const formik = useFormik({
-    initialValues: {
-      assignmentId: Assessment?.id,
-      title: Assessment.title,
-      description: Assessment.description,
-    },
-    validationSchema,
-    onSubmit: async (values) => {
-      try {
-        await UpdateAssignment({
-          variables: {
-            assignmentId: Assessment?.id,
-            input: {
-              title: values.title,
-              description: values.description,
-            },
-          },
-        });
-      } catch (err) {
-        console.error("Assessment update failed:", err);
-      }
-    },
-  }) as any;
+    } catch {
+      toast.error("Failed to delete question");
+    }
+  };
 
   return (
-    <div
-      className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
-      <div className="px-2 pr-14">
-        <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-         Update Course Assessment
-        </h4>
-        <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-          update course assessment for your audience.
-        </p>
+    <div className="max-w-3xl mx-auto p-6 bg-white rounded-md shadow-[#387467] shadow space-y-6 mt-8">
+      <div className="flex justify-between items-center">
+        <h2 className="text-lg font-semibold">Edit Question</h2>
+        <button
+          type="button"
+          className="text-red-500 flex items-center gap-1"
+          onClick={handleDeleteQuestion}
+        >
+          <Trash2 size={16} />
+          Delete Question
+        </button>
       </div>
-      <div className="flex flex-col">
-        <div className="custom-scrollbar overflow-y-auto px-2 pb-3">
-          <div className="mt-7">
 
-            <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-              <div className="col-span-2 lg:col-span-2">
-                <Label>Assessment Title</Label>
-                <input
-                  id="title"
-                  name="title"
-                  type="text"
-                  placeholder="Enter assessment title"
-                  value={formik.values.title}
-                  onChange={formik.handleChange}
-                  className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
-                />
-                {formik.errors.title && formik.touched.title && (
-                  <span className="text-red-500 text-xs">{formik.errors.title}</span>
-                )}
-              </div>
+      {/* Question Text */}
+      <div>
+        <label className="block font-medium mb-1">Question</label>
+        <textarea
+          name="questionText"
+          value={formik.values.questionText}
+          onChange={(e) => {
+            formik.handleChange(e);
+            UpdateQuestion({
+              variables: {
+                questionId: question.id,
+                input: {
+                  questionText: e.target.value,
+                  correctAnswer: formik.values.correctAnswer,
+                },
+              },
+            }).then(r => {});
+          }}
+          className="w-full border px-3 py-6 rounded bg-white h-full"
+        />
+      </div>
 
-              <div className="col-span-2">
-                <Label>Assessment Description</Label>
-                <textarea id="description"
-                          name="description"
-                          placeholder="Enter course description"
-                          value={formik.values.description}
-                          onChange={formik.handleChange}
-                          className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
-                />
-                {formik.errors.description && formik.touched.description && (
-                  <span className="text-red-500 text-xs">{formik.errors.description}</span>
-                )}
-              </div>
-            </div>
+      {/* Options */}
+      <div>
+        <label className="block font-medium mb-2">Options</label>
+        {formik.values.options.map((opt, index) => (
+          <div key={index} className="flex items-center gap-2 mb-2">
+            <input
+              type="text"
+              value={opt}
+              onChange={(e) => {
+                const newOptions = [...formik.values.options];
+                newOptions[index] = e.target.value;
+                formik.setFieldValue("options", newOptions);
+                handleUpdateOption(index, e.target.value).then(r => {});
+              }}
+              className="flex-1 border px-3 py-3 rounded bg-white"
+              placeholder={`Option ${index + 1}`}
+            />
+            <button
+              type="button"
+              className="text-red-500"
+              onClick={() => handleDeleteOption(index)}
+            >
+              <Trash2 size={16} />
+            </button>
           </div>
-        </div>
-
-        <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
-          <Button size="sm" variant="outline" onClick={onClose}>
-            Close
-          </Button>
-
-          <button
-            onClick={() => formik.handleSubmit()} disabled={loading}
-            type="button"
-            className="inline-flex items-center justify-center rounded-xl   text-white font-semibold   shadow-md px-8  rounded-md bg-[#387467] text-white py-3  disabled:opacity-60"
-
-            // onClick={() => formik.handleSubmit()}
-            // disabled={loading}
-          >
-            {loading ? (
-              <>
-                <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                  ></path>
-                </svg>
-                please wait...
-              </>
-            ) : "Update assessment"}
-
-          </button>
-        </div>
-        {error?.message && (
-          <div
-            className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative mt-3 text-sm text-center">
-            {error?.message}
+        ))}
+        <div
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={addOption}
+        >
+          <div className="w-8 h-8 flex items-center justify-center bg-[#387467] rounded-full hover:bg-green-900">
+            <Plus size={16} className="text-white" />
           </div>
-        )}
+          <span className="text-sm font-medium text-gray-700">
+            Add Option
+          </span>
+        </div>
+      </div>
+
+      {/* Correct Answer */}
+      <div>
+        <label className="block font-medium mb-1">Correct Answer</label>
+        <select
+          name="correctAnswer"
+          value={formik.values.correctAnswer}
+          onChange={(e) => {
+            formik.handleChange(e);
+            UpdateQuestion({
+              variables: {
+                questionId: question.id,
+                input: {
+                  questionText: formik.values.questionText,
+                  correctAnswer: e.target.value,
+                },
+              },
+            }).then(r => {});
+          }}
+          className="w-full border px-3 py-3 rounded bg-white cursor-pointer"
+        >
+          <option value="" className='bg-white'>Select correct answer</option>
+          {formik.values.options.map((opt, i) => (
+            <option key={i} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
       </div>
     </div>
-  )
+  );
 }
-
-
-export default Update_Assessment

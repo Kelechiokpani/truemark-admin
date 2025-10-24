@@ -1,43 +1,14 @@
 import { ApolloClient, InMemoryCache, createHttpLink, HttpLink, from } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
-import {useRouter} from "next/navigation";
-import { redirect } from "next/navigation";
+import { API_URL } from "@/lib/env";
 
 
 
 const httpLink = createHttpLink({
-  uri: "https://staging.api.truemarkglobalss.com/graphql",
+  uri: API_URL,
+  // uri: "https://staging.api.truemarkglobalss.com/graphql",
 });
-
-// const errorLink = onError((graphQLErrors:any) => {
-//
-//   const {  networkError, operation } = graphQLErrors;
-//   const bodyText = graphQLErrors?.error?.bodyText;
-//   if (bodyText) {
-//     try {
-//       const parsed = JSON.parse(bodyText);
-//
-//       parsed?.errors?.forEach((err: any) => {
-//         const message = err?.message;
-//         const code = err?.extensions?.code;
-//         const stacktrace = err?.extensions?.exception?.stacktrace?.[0];
-//
-//         console.log("GraphQL Message:", message);
-//         console.log("GraphQL Code:", code);
-//         console.log("GraphQL Stacktrace:", stacktrace);
-//       });
-//     } catch (e) {
-//       console.error("Failed to parse bodyText:", e);
-//     }
-//   }
-//
-//   if (networkError) {
-//     console.error("Network Error:", networkError);
-//   }
-// });
-
-
 
 // @ts-ignore
 export const errorLink = onError((graphQLErrors:any) => {

@@ -55,33 +55,66 @@ const Transaction_List  =  ({data}) => {
       render: () => <span>{ListIcons.dashboard}</span>,
     },
     {
-      header: "Assignment Id",
-      accessor: "assignmentId",
+      header: "Payment Id",
+      accessor: "paymentReference",
       render: (row: any) => (
-        <span title={row.assignmentId}>
-          {row.assignmentId ? row.assignmentId.slice(0, 10) : ""}...
+        <span title={row.paymentReference}>
+          {row.paymentReference ? row.paymentReference.slice(0, 10) : ""}...
         </span>
       ),
     },
     {
       header: "Name",
-      accessor: "name",
+      accessor: "fullname",
       render: (row: any) => (
         <span className="lowercase hover:underline">
-          {row.user.fullname}
+          {row?.user?.fullname}
         </span>
       ),
     },
     {
-      header: "User Email",
+      header: "Email",
       accessor: "email",
       render: (row: any) => (
         <span className="lowercase hover:underline">
-          {row.user.email}
+          {row?.user?.email}
         </span>
       ),
     },
-    { header: "Assessment score", accessor: "score" },
+
+    {
+      header: "Amount",
+      accessor: "amount",
+      render: (row: any) => (
+        <span className="lowercase hover:underline">
+          {new Intl.NumberFormat("en-NG", {
+              style: "currency",
+              currency: "NGN",
+              minimumFractionDigits: 0 // no .00 unless you want it
+            }).format(Number(row.amount))}
+        </span>
+      ),
+    },
+    {
+      header: "status",
+      accessor: "status",
+      render: (row: any) => (
+        <div>
+          {row.status === "completed" ? (
+            <span className="lowercase hover:underline text-green-700">
+          {row.status}
+           </span>
+          ): (
+            <span className="lowercase hover:underline">
+          {row.status}
+        </span>
+          )}
+
+        </div>
+
+      ),
+    },
+    // { header: "course Id", accessor: "courseId" },
 
   ];
 

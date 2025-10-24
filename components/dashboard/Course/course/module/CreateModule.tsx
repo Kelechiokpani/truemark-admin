@@ -76,7 +76,7 @@ const Create_Module =({ onClose, isOpen, course })=> {
         </p>
       </div>
       <div className="flex flex-col">
-        <div className="custom-scrollbar h-[250px] overflow-y-auto px-2 pb-3">
+        <div className="custom-scrollbar h-[300px] overflow-y-auto px-2 pb-3">
           <div className="mt-7">
             <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
               <div className="col-span-2 lg:col-span-2">
@@ -88,7 +88,7 @@ const Create_Module =({ onClose, isOpen, course })=> {
                   placeholder="Enter Module name"
                   value={formik.values.name}
                   onChange={formik.handleChange}
-                  className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-[#fff9d9] focus:outline-none focus:ring-2 focus:ring-[#387467]"
+                  className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
                 />
                 {formik.errors.name && formik.touched.name && (
                   <span className="text-red-500 text-xs">{formik.errors.name}</span>
@@ -102,7 +102,7 @@ const Create_Module =({ onClose, isOpen, course })=> {
                           placeholder="Enter Module description"
                           value={formik.values.description}
                           onChange={formik.handleChange}
-                          className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-[#fff9d9] focus:outline-none focus:ring-2 focus:ring-[#387467]"
+                          className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
                 />
                 {formik.errors.description && formik.touched.description && (
                   <span className="text-red-500 text-xs">{formik.errors.description}</span>

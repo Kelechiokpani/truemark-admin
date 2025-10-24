@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Exams_Assessment from "@/components/dashboard/Exam-setup/Exams/Exam-Questions/Exams-Questions";
+import Exams_Assessment from "@/components/dashboard/Exam-setup/Exam-Questions/Exams-Questions";
 
 export default function MyLearningPage() {
 

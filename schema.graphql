@@ -8,6 +8,25 @@ schema {
 "Indicates exactly one field must be supplied and this field must not be `null`."
 directive @oneOf on INPUT_OBJECT
 
+type AdminPaginatedPaymentResponse {
+    page: Int!
+    pageSize: Int!
+    payments: [AdminPayment!]!
+    total: Int!
+}
+
+type AdminPayment {
+    amount: Float!
+    courseId: String
+    createdAt: String!
+    id: ID!
+    paymentReference: String!
+    status: String!
+    updatedAt: String!
+    user: User!
+    userId: String
+}
+
 type AdminStats {
     totalAssignments: Int!
     totalCourses: Int!
@@ -29,7 +48,8 @@ type AssignmentSubmission {
     answers: [SubmissionAnswer]!
     assignmentId: ID!
     id: ID!
-    score: Int!
+    score: String!
+    user: User
     userId: ID!
 }
 
@@ -144,10 +164,28 @@ type Option {
     questionId: ID!
 }
 
+type Payment {
+    amount: Float!
+    courseId: String
+    createdAt: String!
+    id: ID!
+    paymentReference: String!
+    status: String!
+    updatedAt: String!
+    userId: String
+}
+
 type PaymentResponse {
     paymentReference: String!
     paymentUrl: String!
     success: Boolean!
+}
+
+type PaymentsResponse {
+    page: Int!
+    pageSize: Int!
+    payments: [Payment!]!
+    total: Int!
 }
 
 type Query {
@@ -162,10 +200,14 @@ type Query {
     getEnquiries(limit: Int, page: Int): [Enquiry!]!
     getEnrolledCourseModules(courseId: ID!): [CourseModule]!
     getEnrolledModuleLessions(moduleId: ID!): [CourseLession]!
+    getPayments(page: Int, pageSize: Int): PaymentsResponse!
+    getPaymentsForAdmin(page: Int, pageSize: Int): AdminPaginatedPaymentResponse!
     getUserEnrolledCourses: [Course]!
     getUserInfo: User!
+    getUserPayments(page: Int, pageSize: Int, userId: ID!): PaymentsResponse!
     getUserSubmissionsForAssignment(assignmentId: ID!): [AssignmentSubmission]
     getUserSubmissionsForCourse(courseId: ID!): AssignmentSubmission
+    getUsers(limit: Int!, page: Int!): UserPaginatedResponse!
     verifyPayment(reference: String!): Boolean!
 }
 
@@ -178,6 +220,7 @@ type Question {
 }
 
 type SubmissionAnswer {
+    correctAnswer: String
     id: ID!
     questionId: ID!
     selectedOptionId: ID!
@@ -191,6 +234,12 @@ type User {
     id: ID!
     isAdmin: Boolean!
     updatedAt: String!
+}
+
+type UserPaginatedResponse {
+    currentPage: Int!
+    totalPages: Int!
+    users: [User!]!
 }
 
 scalar Upload

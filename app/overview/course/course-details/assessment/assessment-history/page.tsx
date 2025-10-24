@@ -1,14 +1,10 @@
 "use client";
 import React, { Suspense } from "react";
-import Course_Exams_History from "@/components/dashboard/Exam-setup/Exam-Submission/History";
+import Course_Exams_History from "@/components/dashboard/Exam-setup/Exam-Submission-History/History";
 
 export default function MyLearningPage() {
 
   return (
-    // <div className="min-h-screen bg-white">
-    //   <Course_Exams_History/>
-    // </div>
-
     <div className="min-h-screen bg-white">
       <Suspense
         fallback={

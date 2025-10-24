@@ -8,31 +8,8 @@ export type CourseList = {
   video?: any;
   publishedAt?: string;
   status?: 'not-paid' | 'paid';
-
 };
 
-
-export interface PaystackButtonProps {
-  text?: string;
-  className?: string;
-  email: string;
-  amount: number; // amount in kobo
-  publicKey: string;
-  reference?: string;
-  onSuccess: (reference: any) => void;
-  onClose: () => void;
-}
-
-
-
-
-export type Author = {
-  name: string;
-  image: string;
-  bio?: string;
-  _id?: number | string;
-  _ref?: number | string;
-};
 
 export type Course = {
   title: string;
@@ -40,6 +17,47 @@ export type Course = {
   description: string;
   mainImage?: any;
   price?: number;
+  assessmentId?:any
   oldPrice?: number;
   slug?: string;
 }
+
+
+
+
+// export type AssessmentList = {
+//   id: string;
+// }
+//
+//
+// export type Assessment = {
+//   id:string
+// }
+
+
+export type Option = {
+  __typename: string;
+  id: string;
+  questionId: string;
+  optionText: string;
+};
+
+export type Question = {
+  __typename: string;
+  id: string;
+  assignmentId: string;
+  questionText: string;
+  options: Option[];
+  correctAnswer: string;
+};
+
+export type Assessment = {
+  __typename: string;
+  id: string;
+  courseId: string;
+  title: string;
+  description: string;
+  questions: Question[];
+};
+
+export type AssessmentList = Assessment | any[];

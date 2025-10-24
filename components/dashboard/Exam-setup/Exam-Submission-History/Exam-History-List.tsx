@@ -4,12 +4,14 @@ import React, {useEffect, useMemo, useState} from "react";
 import { SearchInput } from "@/components/utility/SearchInput";
 import { useDebouncedValue } from "@/components/utility/useDebouncedSearch";
 import { Pagination } from "@/components/utility/Pagination";
-import { Modal } from "@/components/ui/modal";
+// import { Modal } from "@/components/ui/modal";
 import { useModal } from "@/components/hooks/useModal";
 import BaseTable from "@/components/utility/Base-Table";
-import DetailsCard from "@/components/dashboard/customer_Enquiry/details";
+// import DetailsCard from "@/components/dashboard/customer_Enquiry/details";
 import { useCourseStore } from "@/store/useCourseStore";
 import { useParams, useRouter } from "next/navigation";
+
+
 
 const Exam_History_List  =  ({data}) => {
   const course = useCourseStore((s) => s.selectedCourse);
@@ -25,10 +27,11 @@ const Exam_History_List  =  ({data}) => {
   const debouncedSearchTerm = useDebouncedValue(searchTerm, 300);
 
 
+
   const filteredData = useMemo(() => {
     if (!debouncedSearchTerm.trim()) return data;
     return data.filter((contact:any) =>
-      contact?.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      contact?.user?.fullname.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
     );
   }, [data, debouncedSearchTerm]);
 
@@ -62,23 +65,26 @@ const Exam_History_List  =  ({data}) => {
         </span>
       ),
     },
-    { header: "Assessment score", accessor: "score" },
     {
-      header: "Action",
-      accessor: "action",
+      header: "Name",
+      accessor: "name",
       render: (row: any) => (
-        <button
-          onClick={() => {
-            router.push(`/overview/course/${course?.id}/exam-list/${row?.id}`)
-            // setSelectedRow(row);
-            // openModal();
-          }}
-          className="lowercase hover:underline"
-        >
-          View
-        </button>
+        <span className="lowercase hover:underline">
+          {row.user.fullname}
+        </span>
       ),
     },
+    {
+      header: "User Email",
+      accessor: "email",
+      render: (row: any) => (
+        <span className="lowercase hover:underline">
+          {row.user.email}
+        </span>
+      ),
+    },
+    { header: "Assessment score", accessor: "score" },
+
   ];
 
 
@@ -112,16 +118,12 @@ const Exam_History_List  =  ({data}) => {
 
       <div>
 
-        <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[600px]">
-          <DetailsCard selected={selectedRow}/>
-        </Modal>
+        {/*<Modal isOpen={isOpen} onClose={closeModal} className="max-w-[600px]">*/}
+        {/*  <DetailsCard selected={selectedRow}/>*/}
+        {/*</Modal>*/}
 
       </div>
-
-
     </div>
-
-
   )
 }
 

@@ -5,7 +5,7 @@ import EmptyContainer from "@/components/utility/EmptyContainer";
 import React from "react";
 import { useCourseStore } from "@/store/useCourseStore";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import Exam_History_List from "@/components/dashboard/Exam-setup/Exam-Submission/Exam-History-List";
+import Exam_History_List from "@/components/dashboard/Exam-setup/Exam-Submission-History/Exam-History-List";
 
 
 const empty_details = {
@@ -22,14 +22,14 @@ const Course_Exams_History = ()=> {
 
   const searchParams = useSearchParams();
   const dataId = searchParams.get("dataId");
+  const { selectedAssessment} = useCourseStore()
 
   const { data, loading, error} = useQuery(GET_USER_SUBMISSION, {
-    variables:{assignmentId:dataId},
+    variables:{assignmentId: selectedAssessment?.id},
     fetchPolicy: "cache-and-network",
     // fetchPolicy: 'network-only',
   }) as any;
 
-  console.log(data, "data......");
 
   return(
     <div>
@@ -48,8 +48,7 @@ const Course_Exams_History = ()=> {
             <div className="flex items-center justify-center min-h-[300px] w-full">
               <CenteredLoader />
             </div>
-          ) : data?.getAssignmentByCourseId?.length === 0 ? (
-          // ) : data?.getAssignmentSubmissionsByAssignmentId?.length === 0 || "undefined" ? (
+          ) : data?.getAssignmentSubmissionsByAssignmentId?.length === 0 ? (
             <EmptyContainer
               title={empty_details.title}
               description={empty_details.description}

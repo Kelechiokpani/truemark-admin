@@ -7,10 +7,10 @@ import { useModal } from "@/components/hooks/useModal";
 import Create_Module from "@/components/dashboard/Course/course/module/CreateModule";
 import { useCourseStore } from "@/store/useCourseStore";
 import { useQuery } from "@apollo/client/react";
-import { GET_COURSES_MODULES } from "@/lib/Query/queries";
+import { GET_ASSESSMENTS, GET_COURSES_MODULES } from "@/lib/Query/queries";
 import CenteredLoader from "@/components/utility/Loader";
 import EmptyContainer from "@/components/utility/EmptyContainer";
-import { Plus, Eye, History } from "lucide-react";
+import { Plus, Eye } from "lucide-react";
 import Link from "next/link";
 
 const empty_details = {
@@ -25,8 +25,8 @@ const CourseModules = () => {
   const params = useParams();
   const { isOpen, openModal, closeModal } = useModal();
   const router = useRouter();
-
   const id = params?.courseId  || course?.id
+
 
   const { data, loading, error} = useQuery(GET_COURSES_MODULES, {
     fetchPolicy: "cache-and-network",
@@ -35,7 +35,12 @@ const CourseModules = () => {
   }) as any;
 
 
-  ///overview/course/course-details
+  const { data:quiz, loading:quizLoading} = useQuery(GET_ASSESSMENTS, {
+    variables:{courseId:id},
+    fetchPolicy: "cache-and-network",
+    // fetchPolicy: 'network-only',
+  }) as any;
+
 
   const handleRoute = () => {
     router.push(`/overview/course/course-details/assessment-setup`)
@@ -66,31 +71,38 @@ const CourseModules = () => {
         </header>
 
         <div className="py-6 px-6 flex justify-between gap-6">
-          <h1 className="text-1xl font-bold">Course Assessment</h1>
+          <h1 className="text-1xl font-bold mt-2">Course Assessment</h1>
+          {quizLoading ? (<div>Loading....</div>) : (
+            <div className="flex gap-6 uppercase">
+              {quiz?.getAssignmentByCourseId ? (
+                  <Link href={`/overview/course/course-details/assessment`}>
+                    {/*<Link href={`/overview/course/${id}/assessment`}>*/}
+                    <button
+                      className="lowercase bg-[#387467] flex text-white text-sm  px-4 py-2 rounded-md ">
+                      <Eye size={16} className="mt-0.5 mr-2" /> View assessment
+                    </button>
+                  </Link>
+              ) : (
+                <button
+                  onClick={handleRoute}
+                  className=" lowercase bg-[#387467] flex text-white px-4 py-2 rounded-md text-sm ">
+                  <Plus size={16} className="mt-0.5 mr-2" />Add assessment
+                </button>
+              )}
 
-          <div className="flex gap-6 uppercase">
-            <button
-              onClick={handleRoute}
-              className=" lowercase bg-[#387467] flex text-white px-4 py-2 rounded-md text-sm ">
-              {/*className="bg-[#387467] flex text-white px-4 py-2 rounded-md font-bold">*/}
-              <Plus size={16} className="mt-0.5 mr-2" />Add assessment
-            </button>
 
-            <Link href={`/overview/course/course-details/assessment`}>
-            {/*<Link href={`/overview/course/${id}/assessment`}>*/}
-              <button
-                className="lowercase bg-[#387467] flex text-white text-sm  px-4 py-2 rounded-md ">
-                <Eye size={16} className="mt-0.5 mr-2" /> View assessment
-              </button>
-            </Link>
+            </div>
+          )}
 
+        </div>
 
-          </div>
+        <div className="py-6 px-6">
+          {course?.description}
         </div>
 
         {loading ? (
           <div className="flex items-center justify-center min-h-[300px] w-full">
-            <CenteredLoader />
+          <CenteredLoader />
           </div>
         ) : data?.getCourseModules.length === 0 ? (
           <EmptyContainer
@@ -99,7 +111,7 @@ const CourseModules = () => {
           />
         ) : (
           <Accordion course={course} modules={data?.getCourseModules} />
-         )}
+        )}
 
 
         <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">

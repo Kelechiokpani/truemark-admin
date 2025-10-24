@@ -3,10 +3,8 @@ import './globals.css';
 import { SidebarProvider } from "@/components/dashboard/context/SidebarContext";
 import NextTopLoader from "nextjs-toploader";
 import { client } from "@/lib/apolloClient";
-import { ApolloProvider, useQuery } from "@apollo/client/react";
+import { ApolloProvider } from "@apollo/client/react";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "@/store/useUserStore";
-import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 
 
@@ -18,7 +16,6 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
-      {/*<body className={`${outfit.className} `} suppressHydrationWarning>*/}
       <NextTopLoader
         color="#387467"
         initialPosition={0.08}
@@ -34,7 +31,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
       <ApolloProvider client={client}>
         <SidebarProvider>{children}</SidebarProvider>
       </ApolloProvider>
-      </body>r
+      </body>
     </html>
   );
 }

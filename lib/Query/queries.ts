@@ -160,10 +160,21 @@ export const GET_USER_SUBMISSION = gql`
                 submissionId
                 questionId
                 selectedOptionId
+                correctAnswer
+            }
+            user {
+                id
+                email
+                fullname
+                isAdmin
+                createdAt
+                updatedAt
             }
         }
     }
 `;
+
+
 
 export const GET_ANALYTICS = gql`
     query GetAdminStats {
@@ -177,5 +188,35 @@ export const GET_ANALYTICS = gql`
         }
     }
 
+`
+
+
+
+export const GET_ALL_TRANSACTION = gql`
+    query GetPaymentsForAdmin($page: Int, $pageSize: Int) {
+        getPaymentsForAdmin(page: $page, pageSize: $pageSize) {
+            payments {
+                id
+                amount
+                paymentReference
+                status
+                courseId
+                userId
+                createdAt
+                updatedAt
+                user {
+                    id
+                    email
+                    fullname
+                    isAdmin
+                    createdAt
+                    updatedAt
+                }
+            }
+            total
+            page
+            pageSize
+        }
+    }
 `
 

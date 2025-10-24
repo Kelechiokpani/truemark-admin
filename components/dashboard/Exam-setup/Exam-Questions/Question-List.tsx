@@ -2,17 +2,24 @@
 import React from "react";
 import { useCourseStore } from "@/store/useCourseStore";
 import { useParams, useRouter } from "next/navigation";
-import Question_Accordion from "@/components/dashboard/Exam-setup/Exams/Exam-Questions/Question-Accordion";
+import Question_Accordion from "@/components/dashboard/Exam-setup/Exam-Questions/Question-Accordion";
 import { Edit, Eye, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useModal } from "@/components/hooks/useModal";
+import { Modal } from "@/components/ui/modal";
+import Delete_Assessment from "@/components/dashboard/Exam-setup/Exams-utils/assessment/Delete";
+import Update_Assessment from "@/components/dashboard/Exam-setup/Exams-utils/assessment/Update";
 
 
 export default function QuestionList({data}) {
-
+  const { isOpen, openModal, closeModal,  isDelete, openDelete, closeDelete  } = useModal();
   const course = useCourseStore((s) => s.selectedCourse);
+  const { setSelectedAssessment, selectedAssessment} = useCourseStore()
+
   const params = useParams();
   const router = useRouter();
   const id = params?.courseId  || course?.id
+
 
   return (
     <div>
@@ -23,11 +30,12 @@ export default function QuestionList({data}) {
         >
           ← Back
         </button>
-
         <Link
+          onClick={()=> setSelectedAssessment(data)}
             href={{
-              pathname:`/overview/course/${id}/assessment/assessment-history`,
-              query: { dataId: data?.id },
+              pathname:`/overview/course/course-details/assessment/assessment-history`,
+              // pathname:`/overview/course/${id}/assessment/assessment-history`,
+              // query: { dataId: data?.id },
             }}
           >
           <button
@@ -41,26 +49,41 @@ export default function QuestionList({data}) {
         <h1 className="text-2xl font-bold capitalize">{data?.title}</h1>
       </header>
 
-      <div className="flex gap-2 justify-end mt-3">
-        <button
-          className="p-2 rounded-lg hover:bg-gray-100 text-yellow-600"
-          title="Edit"
-        >
-          <Edit size={22} />
-        </button>
+      <div className="flex gap-2 justify-between mt-3 px-4 gap-4">
+     <h1 className='mt-2 font-bold'> Assessment</h1>
+        <div className='flex '>
+          <button
+            className="p-2 flex px-4 text-sm  gap-1 rounded-lg hover:bg-gray-100 text-gray-600"
+            title="Edit"
+            onClick={openModal}
+          >
+            <Edit size={22} />update assessment
+          </button>
 
-        <button
-          className="p-2 rounded-lg hover:bg-gray-100 text-red-600"
-          title="Delete"
-        >
-        <Trash2 size={22} />
-        </button>
+          <button
+            className="p-2 flex px-4 text-sm gap-1 rounded-lg hover:bg-gray-100 text-red-600"
+            title="Delete"
+            onClick={openDelete}
+          >
+            <Trash2 size={21} />delete assessment
+          </button>
+        </div>
       </div>
 
-      <div className="flex-1  bg-white shadow rounded-lg p-8 mt-8 shadow-md border">
+      <div className="flex-1 bg-white shadow rounded-lg p-8 mt-4 shadow-md border">
         <Question_Accordion course={course} modules={data} />
       </div>
 
+
+      <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
+        <Update_Assessment onClose={closeModal} isOpen={isOpen} Assessment={data} />
+      </Modal>
+
+      <div>
+        <Modal isOpen={isDelete} onClose={closeDelete} className="max-w-[700px]">
+          <Delete_Assessment isOpen={isDelete} onClose={closeDelete} Assessment={data} />
+        </Modal>
+      </div>
 
     </div>
   );

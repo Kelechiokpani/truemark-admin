@@ -39,7 +39,7 @@ function SideBar() {
   return (
     <div
       className={cn(
-        "bg-white w-[300px] duration-150 flex flex-col shadow-lg flex-shrink-0 h-[70rem] ",
+        "bg-white w-[300px] duration-150 flex flex-col shadow-lg flex-shrink-0  ",
         isOpen ? null : "w-[100px]"
       )}
     >
@@ -72,15 +72,6 @@ function SideBar() {
           isOpen ? null : "items-center"
         )}
       >
-        {/* Admin Menu */}
-        <p
-          className={cn(
-            "text-normal font-bold text-sm text-dark-gray uppercase px-4",
-            isOpen ? null : "px-0 text-center"
-          )}
-        >
-          Admin-Menu
-        </p>
 
         {mainSideBar.map((menu, index) => {
           const active = isRouteActive(menu.link);
@@ -88,7 +79,7 @@ function SideBar() {
             <Link
               key={index}
               className={cn(
-                "group text-text text-sm font-medium rounded-lg py-3 px-4 flex gap-4 items-center capitalize duration-150",
+                "group text-text text-sm font-medium rounded-lg py-3 px-4 flex gap-4 items-center capitalize duration-150 ",
                 active ? "bg-[#387467] text-white" : "hover:bg-green-50",
                 isOpen ? null : "hover:bg-transparent !bg-transparent"
               )}
@@ -114,7 +105,7 @@ function SideBar() {
         {/* Logout */}
         <button
           onClick={handleRoute}
-          className="hover:bg-secondary text-text text-sm font-medium rounded-lg py-3 px-4 flex gap-4 items-center capitalize duration-150"
+          className="mt-3 hover:bg-secondary text-text text-sm font-medium rounded-lg py-3 px-4 flex gap-4 items-center capitalize duration-150"
         >
           <span className="shrink-0 w-8 h-8 rounded-lg border flex items-center justify-center">
             {sideIcons.logout}

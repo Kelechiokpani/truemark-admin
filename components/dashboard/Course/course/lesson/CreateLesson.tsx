@@ -6,8 +6,8 @@ import { useMutation } from "@apollo/client/react";
 import { CREATE_COURSE_LESSON } from "@/lib/Mutation/mutation";
 import { useFormik } from "formik";
 import { toast } from "react-hot-toast";
-import useVideoUploader from "@/lib/useVideoUploder";
 import { GET_COURSES_LESSONS } from "@/lib/Query/queries";
+import useUploader from "@/lib/useUploader";
 
 
 const validationSchema = Yup.object({
@@ -22,6 +22,8 @@ const validationSchema = Yup.object({
 
 const Create_Lesson =({ onClose, modules,  isOpen })=> {
   const [file, setFile] = useState<File | null>(null);
+  const [fileType, setFileType] = useState<"video" | "pdf" | null>(null);
+
   const [CreateCourseLesson, { loading, error }] = useMutation(CREATE_COURSE_LESSON, {
     awaitRefetchQueries: true, refetchQueries:[GET_COURSES_LESSONS], variables:{moduleId:modules?.id},
     onCompleted: (data:any) => {
@@ -43,7 +45,7 @@ const Create_Lesson =({ onClose, modules,  isOpen })=> {
     },
   });
 
-  const { upload, uploadPercentage, loading: uploadLoading } = useVideoUploader({
+  const { upload, uploadPercentage, loading: uploadLoading } = useUploader({
     onCompleted: (res) => {
       console.log("Video Uploaded to Cloudinary:", res)
     },
@@ -65,7 +67,7 @@ const Create_Lesson =({ onClose, modules,  isOpen })=> {
               courseModuleId: modules?.id,
               name: values.name,
               description: values.description,
-              video: values.video,
+              video: values.video || file,
             },
           },
         });
@@ -74,6 +76,7 @@ const Create_Lesson =({ onClose, modules,  isOpen })=> {
       }
     },
   });
+
 
   return (
     <div
@@ -100,46 +103,100 @@ const Create_Lesson =({ onClose, modules,  isOpen })=> {
                   placeholder="Enter Lesson name"
                   value={formik.values.name}
                   onChange={formik.handleChange}
-                  className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-[#fff9d9] focus:outline-none focus:ring-2 focus:ring-[#387467]"
+                  className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
                 />
                 {formik.errors.name && formik.touched.name && (
                   <span className="text-red-500 text-xs">{formik.errors.name}</span>
                 )}
               </div>
 
-              <div className="col-span-2 lg:col-span-2">
+              <div className="col-span-2 lg:col-span-2 space-y-3">
+                {/* File Type Selector */}
+                <Label>Lesson Type</Label>
+                <select
+                  value={fileType ?? ""}
+                  onChange={(e) => {
+                    setFileType(e.target.value as "video" | "pdf");
+                    formik.setFieldValue("video", "");
+                    formik.setFieldValue("pdf", "");
+                    setFile(null);
+                  }}
+                  className="w-full text-[#387467] rounded-md border border-gray-300 p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
+                >
+                  <option value="video">Video</option>
+                  <option value="pdf">PDF</option>
+                </select>
+
+              </div>
+
+              {fileType === "video" && (<div className="col-span-2 lg:col-span-2">
                 <Label>Module Lesson Video</Label>
                 <input
-                        id="video"
-                        name="video"
-                        placeholder="Insert Lesson video"
-                        type="file"
-                        accept="video/*"
-                        onChange={async (event) => {
-                          const file = event.currentTarget.files?.[0];
-                          if (file) {
-                            formik.setFieldValue("video", file);
-                            setFile(file);
-                            try {
-                              // Start uploading immediately
-                              const uploadRes = await upload(file, "truemark_video", "dee0xvh2c");
-                              if (uploadRes?.playback_url) {
-                                formik.setFieldValue("video", uploadRes?.playback_url);
-                              }
-                            } catch (err) {
-                              toast.error("Video upload failed!");
-                              console.error("Video upload error:", err);
-                            }
+                  id="video"
+                  name="video"
+                  placeholder="Insert Lesson video"
+                  type="file"
+                  accept="video/*"
+                  onChange={async (event) => {
+                    const file = event.currentTarget.files?.[0];
+                    if (file) {
+                      formik.setFieldValue("video", file);
+                      try {
+                        // Start uploading immediately
+                        // const uploadRes = await upload(file, "truemark_video", "dee0xvh2c");
+                        const uploadRes = await upload(file);
+                        console.log(uploadRes?.data?.url, "uploadRes.....");
+                        if (uploadRes?.data?.url) {
+                          formik.setFieldValue("video", uploadRes?.data?.url);
+                          setFile(uploadRes?.data?.url);
+                        }
+                      } catch (err) {
+                        toast.error("Video upload failed!");
+                        console.error("Video upload error:", err);
+                      }
 
 
-                          }
-                        }}
-                        className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-[#fff9d9] focus:outline-none focus:ring-2 focus:ring-[#387467]"
+                    }
+                  }}
+                  className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
                 />
                 {formik.errors.video && formik.touched.video && (
                   <span className="text-red-500 text-xs">{formik.errors.video}</span>
                 )}
-              </div>
+              </div>)}
+
+              {fileType === "pdf" && (<div className="col-span-2 lg:col-span-2">
+                <Label>Module Lesson PDF - File</Label>
+                <input
+                  id="video"
+                  name="video"
+                  placeholder="Insert Lesson pdf"
+                  type="file"
+                  accept="application/pdf"
+                  onChange={async (event) => {
+                    const file = event.currentTarget.files?.[0];
+                    if (file) {
+                      formik.setFieldValue("video", file);
+                      try {
+                        // Start uploading immediately
+                        // const uploadRes = await upload(file, "truemark_video", "dee0xvh2c");
+                        const uploadRes = await upload(file);
+                        console.log(uploadRes?.data?.url, "uploadRes.....");
+                        if (uploadRes?.data?.url) {
+                            formik.setFieldValue("video", uploadRes?.data?.url);
+                          setFile(uploadRes?.data?.url);
+                        }
+                      } catch (err) {
+                        toast.error("PDF upload failed!");
+                        console.error("Pdf upload error:", err);
+                      }}
+                  }}
+                  className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
+                />
+                {formik.errors.video && formik.touched.video && (
+                  <span className="text-red-500 text-xs">{formik.errors.video}</span>
+                )}
+              </div>)}
 
               <div className="col-span-2">
                 <Label>Module Lesson Description</Label>
@@ -148,7 +205,7 @@ const Create_Lesson =({ onClose, modules,  isOpen })=> {
                           placeholder="Enter Lesson description"
                           value={formik.values.description}
                           onChange={formik.handleChange}
-                          className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-[#fff9d9] focus:outline-none focus:ring-2 focus:ring-[#387467]"
+                          className="w-full text-[#387467] rounded-md border  border-gray-300  p-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#387467]"
                 />
                 {formik.errors.description && formik.touched.description && (
                   <span className="text-red-500 text-xs">{formik.errors.description}</span>
@@ -163,12 +220,12 @@ const Create_Lesson =({ onClose, modules,  isOpen })=> {
             Close
           </Button>
 
-            {uploadLoading ? (
+          {uploadLoading ? (
               <button disabled
-                 className="inline-flex items-center justify-center rounded-xl text-white font-semibold shadow-md px-8 rounded-md bg-[#387467] text-white py-3 disabled:opacity-60">
-              uploading video please wait.....
-            </button>)
-              : (
+                      className="inline-flex items-center justify-center rounded-xl text-white font-semibold shadow-md px-8 rounded-md bg-[#387467] text-white py-3 disabled:opacity-60">
+                uploading file please wait.....
+              </button>)
+            : (
               <button
                 onClick={() => formik.handleSubmit()}
                 disabled={loading}

@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Plus, Trash2 } from "lucide-react";
 import { useMutation } from "@apollo/client/react";
-import { CREATE_EXAM_ASSIGNMENT } from "@/lib/Mutation/mutation";
+import { CREATE__ASSESSMENT } from "@/lib/Mutation/mutation";
 import { GET_COURSES } from "@/lib/Query/queries";
 import { toast } from "react-hot-toast";
 import React from "react";
@@ -35,7 +35,8 @@ export default function ExamSetup() {
   const course = useCourseStore((s) => s.selectedCourse);
   const id = params?.courseId  || course?.id
 
-  const [CreateAssignment, { loading, error }] = useMutation(CREATE_EXAM_ASSIGNMENT, {
+
+  const [CreateAssignment, { loading, error }] = useMutation(CREATE__ASSESSMENT, {
     awaitRefetchQueries: true, refetchQueries: [GET_COURSES],
     onCompleted: (data: any) => {
       if(data?.createAssignment){
@@ -56,7 +57,6 @@ export default function ExamSetup() {
       }
     },
   });
-
 
 
   const formik = useFormik({
@@ -104,12 +104,14 @@ export default function ExamSetup() {
     ]);
   };
 
+
   // 🔹 Delete a question
   const removeQuestion = (qIndex: number) => {
     const updated = [...formik.values.questions];
     updated.splice(qIndex, 1);
     formik.setFieldValue("questions", updated);
   };
+
 
   // 🔹 Add option
   const addOption = (qIndex: number) => {
@@ -138,15 +140,18 @@ export default function ExamSetup() {
       <header className="bg-[#387467] text-white px-6 py-8 rounded-md mb-8">
         <h1 className="text-3xl font-bold">Set-up Assessment</h1>
       </header>
-      <div className="max-w-6xl mx-auto p-8 space-y-6 bg-white border shadow rounded-md">
-        <div
-          className="w-full flex justify-between items-center p-4 bg-gray-50"
-        >
-          <h2 className="font-semibold text-lg">True-mark (T.M.G.L)</h2>
-          <span className="text-white bg-[#387467] px-2 py-1 rounded-full text-xs">
+
+      <p className='flex justify-end px-4 py-4 font-bold'>Question: {formik?.values?.questions?.length}</p>
+
+
+      <div className="max-w-4xl mx-auto p-8 space-y-6 bg-white border shadow rounded-md">
+        <div className="w-full flex justify-between items-center p-4 bg-white">
+          <h2 className="font-bold text-lg">True-mark (T.M.G.L)</h2>
+          <span className="text-white bg-[#387467] px-4 py-2 rounded-full text-xs">
                   True-mark Global Exam setup
                 </span>
         </div>
+
 
         <div className='flex flex-col justify-center justify-center gap-8'>
           {/* Exam Title */}
@@ -157,7 +162,7 @@ export default function ExamSetup() {
               name="title"
               value={formik.values.title}
               onChange={formik.handleChange}
-              className="border px-3 py-2 rounded w-full"
+              className="border px-3 py-2 rounded w-full bg-white"
             />
             {formik.touched.title && formik.errors.title && (
               <p className="text-red-500 text-sm mt-2">{formik.errors.title}</p>
@@ -173,7 +178,7 @@ export default function ExamSetup() {
               name="description"
               value={formik.values.description}
               onChange={formik.handleChange}
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border px-3 py-2 rounded bg-white"
             />
             {formik.touched.description && formik.errors.description && (
               <p className="text-red-500 text-sm mt-2">{formik.errors.description}</p>
@@ -181,15 +186,13 @@ export default function ExamSetup() {
           </div>
         </div>
 
+        <div className="bg-[#387467] text-white px-6 py-1 rounded-md mb-8"></div>
 
-        {/* Questions */}
-        {/*<div className="space-y-6">*/}
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-1 gap-4">
+
           {formik.values.questions.map((q, qIndex) => (
-            <div
-              key={qIndex}
-              className="border p-4 rounded shadow-sm space-y-4 bg-gray-50"
-            >
+
+            <div key={qIndex} className="border p-4 rounded shadow-sm space-y-4 bg-gray-50">
               <div className="flex justify-between items-center">
                 <label className="font-medium">Question {qIndex + 1}</label>
                 {formik.values.questions.length > 1 && (
@@ -203,22 +206,23 @@ export default function ExamSetup() {
                 )}
               </div>
 
-              {/* Question Input */}
-              <textarea
-                // type="text"
-                name={`questions[${qIndex}].questionText`}
-                value={q.questionText}
-                onChange={formik.handleChange}
-                placeholder="Enter question"
-                className="w-full border px-3 py-2 rounded bg-white"
-              />
-              {formik.errors.questions &&
-                formik.errors.questions[qIndex] &&
-                (formik.errors.questions[qIndex] as any).questionText && (
-                  <p className="text-red-500 text-sm">
-                    {(formik.errors.questions[qIndex] as any).questionText}
-                  </p>
-                )}
+              <div>
+                 <textarea
+                   // type="text"
+                   name={`questions[${qIndex}].questionText`}
+                   value={q.questionText}
+                   onChange={formik.handleChange}
+                   placeholder="Enter question"
+                   className="w-full border px-3 py-2 rounded bg-white"
+                 />
+                {formik.errors.questions &&
+                  formik.errors.questions[qIndex] &&
+                  (formik.errors.questions[qIndex] as any).questionText && (
+                    <p className="text-red-500 text-sm">
+                      {(formik.errors.questions[qIndex] as any).questionText}
+                    </p>
+                  )}
+              </div>
 
               {/* Options */}
               <div>
@@ -255,13 +259,13 @@ export default function ExamSetup() {
 
                   </div>
                 ))}
-                <button
-                  type="button"
-                  className="text-[#387467] text-sm"
-                  onClick={() => addOption(qIndex)}
-                >
-                  + Add Option
-                </button>
+                <div className="flex items-center gap-2 cursor-pointer " onClick={() => addOption(qIndex)}>
+                  <div
+                    className="w-8 h-8 flex items-center justify-center bg-[#387467] rounded-full  hover:bg-green-900">
+                    <Plus size={16} className="text-white" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Add Option</span>
+                </div>
               </div>
 
               {/* Correct Answer */}
@@ -281,6 +285,9 @@ export default function ExamSetup() {
                   ))}
                 </select>
               </div>
+
+              <div className="bg-[#387467] text-white px-6 py-1 rounded-md mb-8"></div>
+
             </div>
           ))}
 
@@ -289,9 +296,9 @@ export default function ExamSetup() {
 
         <div className="flex justify-between gap-6">
 
-          {/* Add Question */}
+        {/* Add Question */}
           <div className="flex items-center gap-2 cursor-pointer" onClick={addQuestion}>
-            <div className="w-8 h-8 flex items-center justify-center bg-[#387467] rounded-full ">
+            <div className="w-8 h-8 flex items-center justify-center bg-[#387467] rounded-full hover:bg-green-900 ">
               <Plus size={16} className="text-white" />
             </div>
             <span className="text-sm font-medium text-gray-700">Add Question</span>
@@ -337,7 +344,11 @@ export default function ExamSetup() {
           </button>
 
         </div>
+
+
       </div>
+
+
     </div>
 
   );

@@ -5,7 +5,7 @@ import EmptyContainer from "@/components/utility/EmptyContainer";
 import React from "react";
 import { useCourseStore } from "@/store/useCourseStore";
 import { useParams, useRouter } from "next/navigation";
-import QuestionList from "@/components/dashboard/Exam-setup/Exams/Exam-Questions/Question-List";
+import QuestionList from "@/components/dashboard/Exam-setup/Exam-Questions/Question-List";
 
 const empty_details = {
   title: "Exam Assessment List Is Empty",
