@@ -1,13 +1,14 @@
 import { ApolloClient, InMemoryCache, createHttpLink, HttpLink, from } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
-import { API_URL } from "@/lib/env";
+// import { PRODUCTION_DOMAIN_URL, STAGING_DOMAIN__URL } from "@/lib/env";
 
 
 
 const httpLink = createHttpLink({
-  uri: API_URL,
+  // uri: PRODUCTION_DOMAIN_URL,
   // uri: "https://staging.api.truemarkglobalss.com/graphql",
+  uri: "https://api.truemarkglobalss.com/graphql",
 });
 
 // @ts-ignore

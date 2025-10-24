@@ -96,7 +96,7 @@ const useUploader = ({ onCompleted, onError }: IUploader = defaults) => {
     try {
       setLoading(true);
       const result = await axios.post(
-        FILE_DOMAIN__URL,
+        `http://api.truemarkglobalss.com/api/file`,
         formData,
         {
           onUploadProgress: (progressEvent: AxiosProgressEvent) => {
