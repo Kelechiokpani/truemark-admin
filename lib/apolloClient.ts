@@ -11,7 +11,6 @@ const httpLink = createHttpLink({
   // uri: "https://api.truemarkglobalss.com/graphql",
 });
 
-
 // @ts-ignore
 export const errorLink = onError((graphQLErrors:any) => {
       // In case you still want to use raw bodyText
