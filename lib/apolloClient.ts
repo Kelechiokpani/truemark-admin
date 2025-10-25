@@ -1,19 +1,19 @@
 import { ApolloClient, InMemoryCache, createHttpLink, HttpLink, from } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
-// import { PRODUCTION_DOMAIN_URL, STAGING_DOMAIN__URL } from "@/lib/env";
+import { NEXT_PUBLIC_API_URL } from "@/lib/env";
 
 
 
 const httpLink = createHttpLink({
-  // uri: PRODUCTION_DOMAIN_URL,
+  uri: NEXT_PUBLIC_API_URL,
   // uri: "https://staging.api.truemarkglobalss.com/graphql",
-  uri: "https://api.truemarkglobalss.com/graphql",
+  // uri: "https://api.truemarkglobalss.com/graphql",
 });
+
 
 // @ts-ignore
 export const errorLink = onError((graphQLErrors:any) => {
-
       // In case you still want to use raw bodyText
       const {  networkError, operation } = graphQLErrors;
       const bodyText = (graphQLErrors as any)?.error?.bodyText;

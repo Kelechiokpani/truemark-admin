@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios, { AxiosError, AxiosProgressEvent, AxiosResponse } from "axios";
-import { FILE_DOMAIN__URL } from "@/lib/env";
 
 // interface IUploader {
 //   onCompleted?: (res: any) => void;
@@ -89,9 +88,6 @@ const useUploader = ({ onCompleted, onError }: IUploader = defaults) => {
     const formData = new FormData();
     formData.append("file", file);
     // formData.append("upload_preset", uploadPreset); // required
-
-    // `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-    // `http://staging.api.truemarkglobalss.com/api/file`,
 
     try {
       setLoading(true);
