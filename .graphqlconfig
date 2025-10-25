@@ -4,7 +4,7 @@
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {
-        "url": "https://staging.api.truemarkglobalss.com/graphql",
+        "url": "https://api.truemarkglobalss.com/graphql",
         "headers": {
           "user-agent": "JS GraphQL"
         },
