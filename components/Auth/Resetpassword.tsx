@@ -32,13 +32,10 @@ const ResetPassword = () => {
   // @ts-ignore
   const [VerifyForgotPassword, { loading, error }] = useMutation(VERIFY_FORGOT_USERS_PASSWORD, {
     onCompleted: async (data:any) => {
-
-      const payload = data?.verifyForgotPassword;
-      console.log(payload, "data......");
-      if (payload?.success) {
-        router.push("/auth/signin");
+      const payload = data?.verifyForgotPassword?.success;
+      if (payload) {
+        router.push("/signin");
       }
-
     },
     onError: (err: any) => {
       if (err?.graphQLErrors?.length) {

@@ -8,6 +8,7 @@ import {  FORGOT_USERS_PASSWORD } from "@/lib/Mutation/mutation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -24,23 +25,23 @@ const ForgotPassword = () => {
   // @ts-ignore
   const [ForgetPassword, { loading, error }] = useMutation(FORGOT_USERS_PASSWORD, {
     onCompleted: async (data:any) => {
-      //const payload = data?.forgetPassword;
-      console.log(data,"...data");
-
-      // if (payload?.success && payload?.user) {
-      //   // Optional: if token is returned from server, use it
-      //   const token = payload.accessToken ?? null;
-      //   localStorage.setItem("token", token);
-      //
-      //   // router.push("/resetpassword");
-      //   router.push({
-      //     pathname: "/resetpassword",
-      //     query: { email: "" },
-      //   } as any);
-      //
-      // }
-
-
+      const payload = data?.forgetPassword?.success;
+      if(payload){
+        toast.success("Otp has been sent to your email.", {
+          style: {
+            background: "#387467",
+            color: "#fff",
+            padding: "0.5rem 1rem",
+            borderRadius: "0.5rem",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+            fontWeight: 500,
+            fontSize: "0.875rem",
+          },
+          position: "bottom-right", // 👈 this moves it to bottom-right
+          duration: 3000,
+        });
+        router.push("/resetpassword")
+      }
     },
     onError: (err: any) => {
       if (err?.graphQLErrors?.length) {
