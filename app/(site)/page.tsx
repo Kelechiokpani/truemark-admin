@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Signup from "@/components/Auth/Signup";
+import Signin from "@/components/Auth/Signin";
 
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main>
-      <Signup />
+      <Signin />
     </main>
   );
 }
