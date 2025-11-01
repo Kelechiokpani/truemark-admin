@@ -8,12 +8,10 @@ import { useModal } from "@/components/hooks/useModal";
 import BaseTable from "@/components/utility/Base-Table";
 import { useCourseStore } from "@/store/useCourseStore";
 import { useParams, useRouter } from "next/navigation";
-import { Modal } from "@/components/ui/modal";
-import DetailsCard from "@/components/dashboard/Transactions/details";
 
 
 
-const Transaction_List  =  ({data}) => {
+const Customer_List  =  ({data}) => {
   const course = useCourseStore((s) => s.selectedCourse);
   const params = useParams();
   const router = useRouter();
@@ -31,7 +29,7 @@ const Transaction_List  =  ({data}) => {
   const filteredData = useMemo(() => {
     if (!debouncedSearchTerm.trim()) return data;
     return data.filter((contact:any) =>
-      contact?.user?.fullname.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      contact?.fullname.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
     );
   }, [data, debouncedSearchTerm]);
 
@@ -57,11 +55,11 @@ const Transaction_List  =  ({data}) => {
       render: () => <span>{ListIcons.dashboard}</span>,
     },
     {
-      header: "Payment Id",
-      accessor: "paymentReference",
+      header: "Customer Id",
+      accessor: "id",
       render: (row: any) => (
-        <span title={row.paymentReference}>
-          {row.paymentReference ? row.paymentReference.slice(0, 10) : ""}...
+        <span title={row.id}>
+          {row.id ? row.id.slice(0, 10) : ""}...
         </span>
       ),
     },
@@ -70,7 +68,7 @@ const Transaction_List  =  ({data}) => {
       accessor: "fullname",
       render: (row: any) => (
         <span className="lowercase hover:underline">
-          {row?.user?.fullname}
+          {row?.fullname}
         </span>
       ),
     },
@@ -79,58 +77,30 @@ const Transaction_List  =  ({data}) => {
       accessor: "email",
       render: (row: any) => (
         <span className="lowercase hover:underline">
-          {row?.user?.email}
-        </span>
-      ),
-    },
-
-    {
-      header: "Amount",
-      accessor: "amount",
-      render: (row: any) => (
-        <span className="lowercase hover:underline">
-          {new Intl.NumberFormat("en-NG", {
-              style: "currency",
-              currency: "NGN",
-              minimumFractionDigits: 0 // no .00 unless you want it
-            }).format(Number(row.amount))}
+          {row?.email}
         </span>
       ),
     },
     {
       header: "status",
-      accessor: "status",
+      accessor: "isAdmin",
       render: (row: any) => (
         <div>
-          {row.status === "completed" ? (
-            <span className="lowercase hover:underline text-green-700 font-bold">
-          {row.status}
+          {row.isAdmin === true ? (
+            <span className=" hover:underline text-green-700 font-bold">
+          Admin Account
            </span>
           ): (
-            <span className="lowercase hover:underline">
-          {row.status}
-        </span>
+            <span className=" hover:underline">
+           User
+          </span>
           )}
 
         </div>
 
       ),
     },
-    {
-      header: "Action",
-      accessor: "action",
-      render: (row: any) => (
-        <button
-          onClick={() => {
-            setSelectedRow(row);
-            openModal();
-          }}
-          className="lowercase hover:underline"
-        >
-          View
-        </button>
-      ),
-    },
+    // { header: "course Id", accessor: "courseId" },
 
   ];
 
@@ -165,13 +135,13 @@ const Transaction_List  =  ({data}) => {
 
       <div>
 
-        <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[600px]">
-          <DetailsCard selected={selectedRow}/>
-        </Modal>
+        {/*<Modal isOpen={isOpen} onClose={closeModal} className="max-w-[600px]">*/}
+        {/*  <DetailsCard selected={selectedRow}/>*/}
+        {/*</Modal>*/}
 
       </div>
     </div>
   )
 }
 
-export default Transaction_List
+export default Customer_List

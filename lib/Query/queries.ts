@@ -77,6 +77,25 @@ export const GET_USERS = gql`
 `;
 
 
+export const ADMIN_GET_ALL_USERS = gql`
+    query GetUsers($page: Int!, $limit: Int!) {
+        getUsers(page: $page, limit: $limit) {
+            users {
+                id
+                email
+                fullname
+                isAdmin
+                createdAt
+                updatedAt
+            }
+            totalPages
+            currentPage
+        }
+    }
+`;
+
+
+
 
 
 
@@ -209,6 +228,15 @@ export const GET_ALL_TRANSACTION = gql`
                     email
                     fullname
                     isAdmin
+                    createdAt
+                    updatedAt
+                }
+                course {
+                    id
+                    name
+                    description
+                    image
+                    price
                     createdAt
                     updatedAt
                 }

@@ -20,6 +20,12 @@ export const mainSideBar = [
     active_icon: sideIcons.sales_active,
   },
   {
+    label: "Customers",
+    link: "/overview/customer",
+    icon: sideIcons.help_center,
+    active_icon: sideIcons.help_center_active,
+  },
+  {
     label: "Enquires",
     link: "/overview/enquiry",
     icon: sideIcons.purchase,

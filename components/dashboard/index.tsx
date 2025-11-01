@@ -36,6 +36,7 @@ export default function AnalyticsOverview() {
     fetchPolicy: "cache-and-network",
   }) as any;
 
+
   if (loading)
     return (
       <div className="flex justify-center items-center h-screen text-gray-500 dark:text-gray-400 w-full">

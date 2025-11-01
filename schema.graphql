@@ -17,6 +17,7 @@ type AdminPaginatedPaymentResponse {
 
 type AdminPayment {
     amount: Float!
+    course: Course!
     courseId: String
     createdAt: String!
     id: ID!
@@ -166,6 +167,7 @@ type Option {
 
 type Payment {
     amount: Float!
+    course: Course
     courseId: String
     createdAt: String!
     id: ID!

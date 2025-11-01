@@ -65,6 +65,9 @@ import { GET_USERS } from "@/lib/Query/queries";
 import Unauthorized from "@/components/hooks/Unauthorized";
 import { useUserStore } from "@/store/useUserStore";
 import CenteredLoader from "@/components/utility/Loader";
+import Unauthenticated from "@/components/hooks/Unauntheticated";
+
+
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { token } = useUserStore();
@@ -91,7 +94,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   // If query errored or user not found
   if (error || !data?.getUserInfo) {
-    return <Unauthorized />;
+    return <Unauthenticated />;
   }
 
   // If user exists but not admin
